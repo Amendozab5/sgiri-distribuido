@@ -1,9 +1,7 @@
 ---
 name: Tarea de entrega
-about: Plantilla para las tareas de E1 y E2 en GitHub Projects
+about: Tarea de E1 o E2 para el tablero de GitHub Projects
 title: "[E1] "
-labels: ""
-assignees: ""
 ---
 
 ## Qué hay que hacer
@@ -17,7 +15,7 @@ assignees: ""
 
 ## Evidencia
 
-<!-- Ruta del archivo que se sube al repo, o enlace al commit/PR. -->
+<!-- Ruta del archivo que se sube al repo, o enlace al commit o al pull request. -->
 
 ## Entrega
 

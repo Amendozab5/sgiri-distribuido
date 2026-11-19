@@ -95,6 +95,8 @@ de qué commit y de qué autores está en [`docs/ATRIBUCION.md`](docs/ATRIBUCION
 ## Documentos de trabajo
 
 - [`docs/PLAN-TRABAJO.md`](docs/PLAN-TRABAJO.md) — cronograma vigente y reparto por integrante.
+- [`docs/TABLERO.md`](docs/TABLERO.md) — issues de E1 y E2 para GitHub Projects.
+- [`docs/levantamiento/`](docs/levantamiento/) — guion de entrevista, acta y encuesta.
 - [`docs/FORM-AC-01-insumos.md`](docs/FORM-AC-01-insumos.md) — qué se extrae del análisis del
   incidente de Fastly para los riesgos y las mitigaciones de E1.
 - [`BITACORA.md`](BITACORA.md) — sesiones, decisiones y problemas resueltos.
