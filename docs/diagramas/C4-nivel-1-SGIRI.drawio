@@ -1,0 +1,58 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="jeDuDSprdMuA4pBYwhVI">
+    <mxGraphModel dx="1661" dy="923" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="c3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;arcSize=40;" value="&lt;b&gt;Cliente&lt;/b&gt;&lt;br&gt;[Persona]&lt;br&gt;Reporta fallas de su servicio de internet y consulta el avance" vertex="1">
+          <mxGeometry height="90" width="200" x="40" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;arcSize=40;" value="&lt;b&gt;Agente de mesa de ayuda&lt;/b&gt;&lt;br&gt;[Persona]&lt;br&gt;Registra, clasifica y asigna incidencias" vertex="1">
+          <mxGeometry height="90" width="200" x="300" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;arcSize=40;" value="&lt;b&gt;Técnico de campo&lt;/b&gt;&lt;br&gt;[Persona]&lt;br&gt;Atiende visitas y actualiza el estado desde el celular" vertex="1">
+          <mxGeometry height="90" width="200" x="560" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;arcSize=40;" value="&lt;b&gt;Administrador&lt;/b&gt;&lt;br&gt;[Persona]&lt;br&gt;Gestiona usuarios, catálogos y reportes" vertex="1">
+          <mxGeometry height="90" width="200" x="820" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=13;arcSize=10;" value="&lt;b&gt;SGIRI Distribuido&lt;/b&gt;&lt;br&gt;[Sistema de software]&lt;br&gt;Gestiona incidencias técnicas de un proveedor de internet: registro, asignación, seguimiento del SLA y comunicación con el cliente" vertex="1">
+          <mxGeometry height="110" width="980" x="40" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="c8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;arcSize=10;" value="&lt;b&gt;Servidor de correo (SMTP)&lt;/b&gt;&lt;br&gt;[Sistema externo]&lt;br&gt;Envía avisos, verificación de cuenta y recuperación de contraseña" vertex="1">
+          <mxGeometry height="90" width="220" x="40" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="c9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;arcSize=10;" value="&lt;b&gt;Cloudinary&lt;/b&gt;&lt;br&gt;[Sistema externo]&lt;br&gt;Almacena fotos, firmas y documentos adjuntos" vertex="1">
+          <mxGeometry height="90" width="220" x="420" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="c10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;arcSize=10;" value="&lt;b&gt;Globalping&lt;/b&gt;&lt;br&gt;[Sistema externo]&lt;br&gt;Ejecuta sondas para revisar el estado de la red" vertex="1">
+          <mxGeometry height="90" width="220" x="800" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="c11" edge="1" parent="1" source="c3" style="endArrow=block;endFill=1;html=1;dashed=1;fontSize=11;labelBackgroundColor=#ffffff;" target="c7" value="Reporta y consulta&lt;br&gt;[HTTPS]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c12" edge="1" parent="1" source="c4" style="endArrow=block;endFill=1;html=1;dashed=1;fontSize=11;labelBackgroundColor=#ffffff;" target="c7" value="Registra y asigna&lt;br&gt;[HTTPS]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c13" edge="1" parent="1" source="c5" style="endArrow=block;endFill=1;html=1;dashed=1;fontSize=11;labelBackgroundColor=#ffffff;" target="c7" value="Actualiza estado y visitas&lt;br&gt;[HTTPS]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c14" edge="1" parent="1" source="c6" style="endArrow=block;endFill=1;html=1;dashed=1;fontSize=11;labelBackgroundColor=#ffffff;" target="c7" value="Administra y genera reportes&lt;br&gt;[HTTPS]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c15" edge="1" parent="1" source="c7" style="endArrow=block;endFill=1;html=1;dashed=1;fontSize=11;labelBackgroundColor=#ffffff;" target="c8" value="Envía correos&lt;br&gt;[SMTP]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c16" edge="1" parent="1" source="c7" style="endArrow=block;endFill=1;html=1;dashed=1;fontSize=11;labelBackgroundColor=#ffffff;" target="c9" value="Sube y descarga archivos&lt;br&gt;[HTTPS, API]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c17" edge="1" parent="1" source="c7" style="endArrow=block;endFill=1;html=1;dashed=1;fontSize=11;labelBackgroundColor=#ffffff;" target="c10" value="Solicita mediciones de red&lt;br&gt;[HTTPS, API]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c18" parent="1" style="text;html=1;align=left;fontSize=11;" value="Diagrama de contexto (C4 nivel 1) · SGIRI Distribuido · Equipo MMZ" vertex="1">
+          <mxGeometry height="30" width="980" x="40" y="610" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
