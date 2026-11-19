@@ -1,0 +1,118 @@
+\section{Resumen ejecutivo}
+
+\pendiente{Redactar entre 300 y 400 palabras. Contar al final con un script; el límite es parte del
+requisito.}
+
+% ---------------------------------------------------------------------
+% Guía de redacción (borrar los comentarios al terminar):
+%  1. Qué problema real resuelve el sistema y para qué organización
+%     concreta (nombre o seudónimo autorizado en el acta), no "las empresas".
+%  2. Quién lo usará: clientes, mesa de ayuda, técnicos de campo.
+%  3. Cómo se resuelve hoy el problema y qué consecuencia medible tiene
+%     (tiempo, costo, errores) según el acta de la entrevista.
+%  4. Por qué la solución debe ser distribuida: dos razones ligadas
+%     directamente a RNF-01 (disponibilidad) y RNF-02 (escalabilidad),
+%     sin definiciones de manual.
+%  5. Alcance del periodo: qué se construye en E1, E2, E3 y E4, y qué
+%     queda explícitamente fuera.
+% ---------------------------------------------------------------------
+
+\section{Contexto y problema}
+
+\subsection{Organización y usuarios}
+
+\pendiente{Describir la organización real (o el grupo de usuarios) con los datos del acta:
+nombre o seudónimo autorizado, actividad, tamaño, ubicación, horario de atención y volumen de
+casos por semana. Si se usa seudónimo, indicarlo y explicar por qué.}
+
+\subsection{Cómo se resuelve hoy}
+
+\pendiente{Describir el proceso actual con sus herramientas reales (hoja de cálculo, WhatsApp,
+cuaderno, sistema anterior), quién hace qué y en qué orden. Un párrafo por paso del proceso.}
+
+\subsection{Consecuencias medibles de no resolverlo}
+
+Cada cifra de esta tabla debe poder rastrearse hasta una frase del acta (anexo~\ref{anexo:acta}).
+
+\begin{table}[H]
+\centering
+\caption{Consecuencias actuales del problema}
+\label{tab:consecuencias}
+\small
+\begin{tabularx}{\linewidth}{@{}lYY@{}}
+\toprule
+Indicador & Valor actual & Fuente \\
+\midrule
+Tiempo medio de registro de una incidencia & \pendiente{cifra} & Acta, pregunta \pendiente{n} \\
+Tiempo medio de asignación al técnico & \pendiente{cifra} & Acta, pregunta \pendiente{n} \\
+Casos perdidos o duplicados por semana & \pendiente{cifra} & Acta, pregunta \pendiente{n} \\
+Incidencias que vencen el SLA sin aviso & \pendiente{cifra} & Acta, pregunta \pendiente{n} \\
+Costo estimado por hora de servicio detenido & \pendiente{cifra} & Acta, pregunta \pendiente{n} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Interesados y expectativas}
+
+\begin{table}[H]
+\centering
+\caption{Interesados del sistema y lo que esperan}
+\label{tab:stakeholders}
+\small
+\begin{tabularx}{\linewidth}{@{}lYY@{}}
+\toprule
+Interesado & Qué espera del sistema & Cómo se comprueba \\
+\midrule
+Cliente final & Saber en qué va su caso sin llamar & Consulta de estado con número de ticket \\
+Agente de mesa de ayuda & Registrar y clasificar rápido, sin duplicar & Formulario de alta en menos de 60 s \\
+Técnico de campo & Ver su cola y actualizar el estado desde el celular & Interfaz adaptable y actualización sin conexión estable \\
+Responsable de operaciones & Cumplir el SLA y ver la carga por técnico & Reporte de cumplimiento y tablero \\
+Gerencia & Reducir el costo de atención & Indicador mensual de costo por caso \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Alcance del periodo}
+
+\begin{table}[H]
+\centering
+\caption{Alcance por entrega}
+\small
+\begin{tabularx}{\linewidth}{@{}lY@{}}
+\toprule
+Entrega & Alcance comprometido \\
+\midrule
+E1 & Definición, requisitos, arquitectura C4, ADR, CAP/PACELC y esqueleto de dos servicios \\
+E2 & Microservicios completos, API documentada y despliegue en contenedores \\
+E3 & Base de datos distribuida y procesamiento de datos del SLA \\
+E4 & Sistema final en capas, pruebas, calidad y defensa \\
+\midrule
+Fuera del alcance & \pendiente{facturación, aplicación móvil nativa, integración con el sistema del proveedor de red} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Objetivos}
+
+\subsection{Objetivo general}
+
+\pendiente{Un solo objetivo, con verbo en infinitivo y resultado observable al final del periodo.}
+
+\subsection{Objetivos específicos e indicadores}
+
+\begin{table}[H]
+\centering
+\caption{Objetivos específicos y su indicador de cumplimiento}
+\label{tab:objetivos}
+\small
+\begin{tabularx}{\linewidth}{@{}clY@{}}
+\toprule
+\# & Objetivo específico & Indicador con que se comprueba \\
+\midrule
+OE1 & \pendiente{objetivo} & \pendiente{indicador con meta numérica y fecha de medición} \\
+OE2 & \pendiente{objetivo} & \pendiente{indicador} \\
+OE3 & \pendiente{objetivo} & \pendiente{indicador} \\
+OE4 & \pendiente{objetivo} & \pendiente{indicador} \\
+\bottomrule
+\end{tabularx}
+\end{table}

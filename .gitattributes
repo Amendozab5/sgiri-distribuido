@@ -1,0 +1,20 @@
+# Normaliza finales de línea: LF en el repositorio, nativo al hacer checkout.
+* text=auto eol=lf
+
+# Binarios: no tocar
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.docx binary
+*.xlsx binary
+*.zip binary
+
+# Editables de diagramas y datos: tratar como texto para que el diff sea legible
+*.drawio text
+*.drawio.svg text
+*.sql text
+*.bib text
+*.tex text
+*.md text

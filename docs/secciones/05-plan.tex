@@ -1,0 +1,96 @@
+\section{Plan del proyecto}
+
+\subsection{Roles y responsabilidades}
+
+\begin{table}[H]
+\centering
+\caption{Roles del equipo y entregables de cada uno}
+\label{tab:roles}
+\small
+\begin{tabularx}{\linewidth}{@{}lYY@{}}
+\toprule
+Integrante & Rol y responsabilidad & Entregables \\
+\midrule
+Zambrano Yong Angel Daniel & Arquitecto y Responsable de Documentación & Diagramas C4, ADR-001 y
+ADR-002, modelo de comunicación, CAP/PACELC, justificación distribuida, integración del documento,
+tablero y bitácora \\
+\addlinespace
+Mendoza Bermello Angello Agustín & Líder de Desarrollo & Esqueleto en \texttt{src/}, comunicación
+entre servicios, instrucciones de ejecución, capturas \\
+\addlinespace
+Macías Vásquez César Abraham & Responsable de Calidad & Historias de usuario, RNF con ISO/IEC 25010,
+riesgos, trabajos relacionados, pruebas y revisión de coherencia \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+En un equipo de tres integrantes, el Arquitecto asume además el rol de Responsable de
+Documentación.
+
+\subsection{Cronograma de las cuatro entregas}
+
+\begin{table}[H]
+\centering
+\caption{Cronograma alineado con el calendario del encuadre}
+\label{tab:cronograma}
+\small
+\begin{tabularx}{\linewidth}{@{}llY@{}}
+\toprule
+Entrega & Semana & Contenido comprometido \\
+\midrule
+E1 & 5 (23 al 29 de noviembre de 2026) & Definición, requisitos, arquitectura C4, ADR, CAP/PACELC,
+esqueleto de dos servicios \\
+\addlinespace
+E2 & 9 & Microservicios completos, API documentada, contenedores \\
+\addlinespace
+E3 & 13 & Base de datos distribuida y procesamiento de datos del SLA \\
+\addlinespace
+E4 & 17 & Sistema final en capas, calidad, pruebas y defensa \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Tablero de trabajo y tareas}
+
+Las tareas se gestionan como \emph{issues} en GitHub Projects, con un issue por entregable, un
+responsable y un criterio de aceptación. Los issues de E1 y de E2 quedan asignados desde la primera
+semana, de modo que la segunda entrega no empieza de cero.
+
+\begin{table}[H]
+\centering
+\caption{Tareas de E1 y E2 y su responsable}
+\label{tab:tareas}
+\small
+\begin{tabularx}{\linewidth}{@{}lYl@{}}
+\toprule
+Entrega & Tarea & Responsable \\
+\midrule
+E1 & Estructura del repositorio, README, bitácora y tablero & Angel \\
+E1 & Diagrama C4 nivel 1 y ADR-001 & Angel \\
+E1 & Diagrama C4 nivel 2, ADR-002 y tabla de comunicación & Angel \\
+E1 & Justificación distribuida y análisis CAP/PACELC & Angel \\
+E1 & Esqueleto: servicio de técnicos & Angello \\
+E1 & Esqueleto: servicio de incidencias y comunicación entre ambos & Angello \\
+E1 & Instrucciones de ejecución y capturas & Angello \\
+E1 & Historias de usuario con criterios de aceptación & César \\
+E1 & Requisitos no funcionales con cifras e ISO/IEC 25010 & César \\
+E1 & Análisis de riesgos y trabajos relacionados & César \\
+E1 & Revisión de coherencia y pruebas del esqueleto & César \\
+E1 & Documento integrado, video y PDF del SGA & Todo el equipo \\
+E2 & Contenedores y API Gateway & Angello \\
+E2 & Contratos OpenAPI versionados & César \\
+E2 & Despliegue en contenedores y pruebas de humo & Angel \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Reglas de trabajo}
+
+\begin{enumerate}
+\item Una rama por tarea y \emph{pull request} a \texttt{main}, aunque la revisión la haga otro
+integrante del equipo.
+\item Cada integrante confirma con su propia cuenta; ningún integrante sube trabajo de otro.
+\item Una entrada en \texttt{BITACORA.md} por sesión, escrita el mismo día.
+\item Toda decisión de arquitectura se registra como ADR antes de implementarse.
+\item Antes de cada integración: \texttt{git pull --rebase} y compilación del documento.
+\end{enumerate}

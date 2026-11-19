@@ -1,0 +1,127 @@
+\section{Requisitos}
+
+\subsection{Requisitos funcionales}
+
+Formato de historia de usuario: \emph{Como} [rol], \emph{quiero} [acción], \emph{para}
+[beneficio]. Cada historia lleva al menos dos criterios de aceptación verificables, escritos como
+situación concreta con resultado esperado (dado / cuando / entonces).
+
+\begin{longtable}{@{}c p{4.2cm} p{5.3cm} p{3.3cm}@{}}
+\caption{Historias de usuario y criterios de aceptación}
+\label{tab:rf}\\
+\toprule
+ID & Historia de usuario & Criterios de aceptación & Origen (acta) \\
+\midrule
+\endfirsthead
+\toprule
+ID & Historia de usuario & Criterios de aceptación & Origen (acta) \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+RF-01 & \textbf{Como} agente de mesa de ayuda, \textbf{quiero} registrar una incidencia con los
+datos mínimos del cliente \textbf{para} no perder el caso mientras atiendo la llamada.
+& \emph{Dado} un cliente con cédula registrada, \emph{cuando} guardo el formulario con los campos
+obligatorios, \emph{entonces} el sistema devuelve un número de ticket y lo muestra en menos de 2 s.
+\newline \emph{Dado} un formulario sin descripción, \emph{cuando} intento guardar, \emph{entonces}
+veo el error del campo y no se crea el ticket.
+& \pendiente{P\#, acta} \\
+\addlinespace
+RF-02 & \textbf{Como} agente, \textbf{quiero} ver los técnicos disponibles con su carga actual
+\textbf{para} asignar el caso a quien pueda atenderlo primero. & \pendiente{criterios} &
+\pendiente{P\#} \\
+\addlinespace
+RF-03 & \textbf{Como} agente, \textbf{quiero} asignar un ticket a un técnico y notificarlo
+\textbf{para} que el trabajo empiece sin llamadas adicionales. & \pendiente{criterios} &
+\pendiente{P\#} \\
+\addlinespace
+RF-04 & \textbf{Como} técnico, \textbf{quiero} ver mi cola de trabajo ordenada por vencimiento del
+SLA \textbf{para} priorizar mi recorrido del día. & \pendiente{criterios} & \pendiente{P\#} \\
+\addlinespace
+RF-05 & \textbf{Como} técnico, \textbf{quiero} actualizar el estado del ticket desde el celular
+\textbf{para} que el cliente y la mesa de ayuda vean el avance en el momento. &
+\pendiente{criterios} & \pendiente{P\#} \\
+\addlinespace
+RF-06 & \textbf{Como} técnico, \textbf{quiero} adjuntar una foto del trabajo realizado
+\textbf{para} respaldar el cierre del caso. & \pendiente{criterios} & \pendiente{P\#} \\
+\addlinespace
+RF-07 & \textbf{Como} cliente, \textbf{quiero} consultar el estado de mi incidencia con el número
+de ticket \textbf{para} no tener que llamar a preguntar. & \pendiente{criterios} &
+\pendiente{P\#} \\
+\addlinespace
+RF-08 & \textbf{Como} responsable de operaciones, \textbf{quiero} ver el cumplimiento del SLA por
+técnico y por periodo \textbf{para} detectar dónde se incumple. & \pendiente{criterios} &
+\pendiente{P\#} \\
+\addlinespace
+RF-09 & \textbf{Como} responsable de operaciones, \textbf{quiero} reasignar un ticket vencido
+\textbf{para} recuperar el caso antes de que se cierre el mes. & \pendiente{criterios} &
+\pendiente{P\#} \\
+\addlinespace
+RF-10 & \textbf{Como} administrador, \textbf{quiero} crear y desactivar cuentas de técnicos
+\textbf{para} controlar quién accede al sistema. & \pendiente{criterios} & \pendiente{P\#} \\
+\addlinespace
+RF-11 & \textbf{Como} sistema, \textbf{quiero} rechazar una transición de estado no permitida
+\textbf{para} que ningún ticket quede atrapado ni con el SLA corriendo por error (riesgo R-01 de
+FORM-AC-01). & \pendiente{transición inválida devuelve \texttt{409} y el estado no cambia} &
+FORM-AC-01 \\
+\end{longtable}
+
+\subsection{Requisitos no funcionales}
+
+Cada requisito está cuantificado y asociado a una característica de la norma ISO/IEC 25010.
+La última columna indica cómo se comprueba al final del periodo; sin esa comprobación, el
+requisito no se considera cumplido.
+
+\begin{longtable}{@{}c p{3.9cm} p{6.2cm} p{3.0cm}@{}}
+\caption{Requisitos no funcionales cuantificados}
+\label{tab:rnf}\\
+\toprule
+ID & Característica ISO/IEC 25010 & Requisito & Verificación \\
+\midrule
+\endfirsthead
+\toprule
+ID & Característica ISO/IEC 25010 & Requisito & Verificación \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+RNF-01 & Fiabilidad (disponibilidad) & 99,5\,\% de disponibilidad mensual del servicio de
+incidencias, equivalente a un máximo de 3,6 h de indisponibilidad al mes.
+& Cálculo sobre el registro de salud de los servicios durante 30 días. \\
+\addlinespace
+RNF-02 & Fiabilidad (tolerancia a fallos) & Si el servicio de adjuntos o el proveedor externo no
+responde, el alta de la incidencia sigue funcionando: responde en menos de 2 s y el ticket se
+registra. \emph{(propuesta inicial, derivada del riesgo R-03 de FORM-AC-01; validar con el acta)}
+& Prueba con el servicio de adjuntos detenido: el ticket se crea y el adjunto queda pendiente. \\
+\addlinespace
+RNF-03 & Eficiencia de desempeño (comportamiento temporal) & El 95\,\% de las consultas de
+disponibilidad de técnicos responde en menos de 300 ms con 50 usuarios simultáneos.
+& Prueba de carga con JMeter o k6: p95 medida y registrada. \\
+\addlinespace
+RNF-04 & Eficiencia de desempeño (capacidad) & Sostener 200 usuarios concurrentes en el pico
+posterior a un corte, con menos del 1\,\% de errores y sin degradar el p95 en más del 50\,\%.
+& Prueba de carga escalonada hasta 200 usuarios. \\
+\addlinespace
+RNF-05 & Seguridad & Autenticación con JWT, contraseñas con bcrypt (coste $\geq$ 10), TLS 1.3 en
+tránsito y sesión que expira a los 30 minutos de inactividad; cero hallazgos críticos en el
+análisis OWASP ZAP. & Escaneo ZAP y revisión de configuración. \\
+\addlinespace
+RNF-06 & Mantenibilidad (modularidad) & Desplegar una versión nueva del servicio de notificaciones
+sin detener el servicio de incidencias, en menos de 10 minutos.
+& Despliegue cronometrado con tráfico activo. \\
+\addlinespace
+RNF-07 & Compatibilidad (interoperabilidad) & La API se publica con contrato OpenAPI 3.1 versionado
+y responde JSON válido a un cliente distinto del propio (por ejemplo, \texttt{curl}).
+& Validación del contrato y prueba con cliente externo. \\
+\end{longtable}
+
+% ---------------------------------------------------------------------
+% Recordatorio (borrar al terminar):
+%  - Un RNF sin cifra se califica con nivel 1 o 0. «El sistema será
+%    rápido» no es un requisito.
+%  - La cifra debe venir del acta o de un acuerdo con la organización;
+%    si es una propuesta del equipo, se dice.
+%  - Cada RNF debe aparecer luego en la justificación de la arquitectura
+%    y en el análisis CAP/PACELC. Si un RNF no se usa en ninguna de las
+%    dos, sobra o falta explicarlo.
+% ---------------------------------------------------------------------

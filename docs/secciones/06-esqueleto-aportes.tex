@@ -1,0 +1,107 @@
+﻿\section{Esqueleto funcional}
+
+\subsection{Qué demuestra el esqueleto}
+
+El esqueleto no implementa la lógica de negocio: demuestra que la base técnica distribuida
+funciona. Dos servicios independientes, cada uno en su proceso y su puerto, se comunican por el
+mecanismo elegido en el ADR-002: el servicio de incidencias consulta al de técnicos y devuelve la
+respuesta combinada.
+
+\begin{table}[H]
+\centering
+\caption{Componentes del esqueleto}
+\label{tab:esqueleto}
+\small
+\begin{tabularx}{\linewidth}{@{}lllY@{}}
+\toprule
+Servicio & Puerto & Rol & Endpoint demostrativo \\
+\midrule
+\texttt{servicio-tecnicos} & 8081 & Proveedor & \texttt{GET /api/tecnicos}, \texttt{GET /api/tecnicos/\{id\}},
+\texttt{GET /actuator/health} \\
+\addlinespace
+\texttt{servicio-incidencias} & 8082 & Consumidor & \texttt{GET /api/incidencias/\{id\}} (resuelve el
+técnico llamando al puerto 8081) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Ejecución}
+
+Las instrucciones completas están en el \texttt{README.md} de la raíz; en resumen, desde una
+terminal por servicio:
+
+\begin{verbatim}
+cd src/servicio-tecnicos  && ./mvnw spring-boot:run     # http://localhost:8081
+cd src/servicio-incidencias && ./mvnw spring-boot:run   # http://localhost:8082
+curl -i http://localhost:8082/api/incidencias/1
+\end{verbatim}
+
+\pendiente{Agregar aquí la salida real de la verificación, con fecha de la ejecución.}
+
+\subsection{Evidencia de ejecución}
+
+\begin{figure}[H]
+\centering
+\figurapendiente{Captura 1: ambos servicios en marcha, con usuario, máquina, fecha y hora visibles}
+\caption{Esqueleto en ejecución: servicios activos y llamada entre ellos.}
+\label{fig:captura1}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\figurapendiente{Captura 2: respuesta combinada del consumidor con los datos del proveedor}
+\caption{Respuesta del servicio de incidencias con datos resueltos del servicio de técnicos.}
+\label{fig:captura2}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\figurapendiente{Captura 3: degradación controlada con el proveedor detenido (503, no 500)}
+\caption{Comportamiento ante la caída del servicio proveedor: degradación controlada.}
+\label{fig:captura3}
+\end{figure}
+
+\section{Aportes del equipo}
+
+Los enlaces apuntan a las confirmaciones y a los issues reales; la tabla se actualiza el último día
+con los números definitivos.
+
+\begin{table}[H]
+\centering
+\caption{Aportes por integrante}
+\label{tab:aportes}
+\small
+\begin{tabularx}{\linewidth}{@{}lYl@{}}
+\toprule
+Integrante & Aporte principal & Enlaces \\
+\midrule
+Angel (\texttt{@iMouraad}) & Arquitectura, ADR, C4, CAP/PACELC, documento & \pendiente{commits e issues} \\
+Angello (\texttt{@Amendozab5}) & Esqueleto, comunicación, ejecución, capturas & \pendiente{commits e issues} \\
+César (\texttt{@CesarMacias007}) & Requisitos, riesgos, pruebas, coherencia & \pendiente{commits e issues} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Declaración de uso de inteligencia artificial}
+
+\pendiente{Completar con la verdad, herramienta por herramienta. Formato sugerido:}
+
+\begin{table}[H]
+\centering
+\caption{Uso de herramientas de inteligencia artificial}
+\small
+\begin{tabularx}{\linewidth}{@{}llYY@{}}
+\toprule
+Herramienta y versión & Para qué se usó & Qué se verificó & Cómo se verificó \\
+\midrule
+\pendiente{} & \pendiente{} & \pendiente{} & \pendiente{} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% ---------------------------------------------------------------------
+% Si no se usó IA, se escribe una sola frase indicándolo y se elimina
+% la tabla. Si se usó, se declara también lo usado en los documentos
+% previos (FORM-AC-01 declaró ChatGPT y Claude). No declararlo es un
+% problema de integridad, no de estilo.
+% ---------------------------------------------------------------------

@@ -1,0 +1,122 @@
+% =====================================================================
+%  TA-PFC-E1 — Proyecto Fin de Curso, entrega 1
+%  SGIRI Distribuido — Sistema de Gestión de Incidencias
+%
+%  Compilación (desde esta carpeta):
+%      pdflatex main.tex
+%      biber main
+%      pdflatex main.tex
+%      pdflatex main.tex
+%
+%  No usar minted ni rutas absolutas: el PDF debe regenerarse al clonar.
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{csquotes}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\usepackage[backend=biber,style=ieee]{biblatex}
+
+\addbibresource{referencias.bib}
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\pendiente}[1]{\textcolor{red}{\textbf{[PENDIENTE: #1]}}}
+\newcommand{\repo}{\url{https://github.com/Amendozab5/sgiri-distribuido}}
+
+\captionsetup{font=small,labelfont=bf}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+% Marcador de figura mientras no exista el archivo exportado
+\setlength{\emergencystretch}{1.5em}
+\newcommand{\pd}{\textcolor{red}{\textbf{?}}}
+
+\newcommand{\figurapendiente}[1]{%
+  \fbox{\parbox[c][4.5cm][c]{0.88\linewidth}{\centering\small\pendiente{#1}}}}
+
+\begin{document}
+
+% ---------------------------------------------------------------------
+% Portada
+% ---------------------------------------------------------------------
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+\centering
+{\large\scshape Universidad Técnica Estatal de Quevedo\par}
+\vspace{0.2cm}
+{\normalsize \pendiente{facultad y carrera}\par}
+\vspace{0.6cm}
+{\normalsize Aplicaciones Distribuidas --- Séptimo nivel, paralelo B\par}
+{\normalsize Periodo académico \pendiente{periodo}\par}
+\vspace{1.8cm}
+{\Huge\bfseries SGIRI Distribuido\par}
+\vspace{0.5cm}
+{\Large Sistema de Gestión de Incidencias para proveedores de servicios de internet\par}
+\vspace{0.4cm}
+{\large Proyecto Fin de Curso --- Entrega 1\par}
+{\normalsize Definición, requisitos y arquitectura base del sistema distribuido\par}
+\vspace{1.5cm}
+
+{\small
+\begin{tabularx}{\linewidth}{@{}l l Y@{}}
+\toprule
+\textbf{Integrante} & \textbf{Rol} & \textbf{Responsabilidad principal} \\
+\midrule
+Zambrano Yong Angel Daniel & Arquitecto y Documentación & C4, ADR, CAP/PACELC, integración del documento \\
+Mendoza Bermello Angello Agustín & Líder de Desarrollo & Esqueleto funcional y comunicación entre servicios \\
+Macías Vásquez César Abraham & Responsable de Calidad & Requisitos, riesgos, pruebas y coherencia \\
+\bottomrule
+\end{tabularx}}
+
+\vspace{1.5cm}
+{\normalsize Fecha de entrega: 29 de noviembre de 2026\par}
+\vspace{0.3cm}
+{\normalsize Repositorio: \repo\par}
+\vspace{1.0cm}
+{\small \pendiente{nombre del docente}\par}
+\end{titlepage}
+\hypersetup{pageanchor=true}
+
+\pagenumbering{roman}
+\tableofcontents
+\clearpage
+
+\pagenumbering{arabic}
+
+% ---------------------------------------------------------------------
+% Contenido (cada sección vive en su propio archivo para que cada
+% integrante pueda trabajar y confirmar por separado)
+% ---------------------------------------------------------------------
+\input{secciones/01-contexto}
+\input{secciones/02-relacionados}
+\input{secciones/03-requisitos}
+\input{secciones/04-arquitectura}
+\input{secciones/05-plan}
+\input{secciones/06-esqueleto-aportes}
+
+% ---------------------------------------------------------------------
+% Referencias
+% ---------------------------------------------------------------------
+\clearpage
+\printbibliography[heading=bibintoc,title={Referencias}]
+
+% ---------------------------------------------------------------------
+% Anexos
+% ---------------------------------------------------------------------
+\appendix
+\input{secciones/07-anexos}
+
+\end{document}

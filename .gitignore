@@ -1,0 +1,55 @@
+# --- Java / Maven -------------------------------------------------------
+target/
+build/
+!.mvn/wrapper/maven-wrapper.jar
+*.class
+*.jar
+!.mvn/wrapper/*.jar
+
+# --- Node (por si se agrega un cliente o herramienta) -------------------
+node_modules/
+dist/
+.npm/
+npm-debug.log*
+
+# --- LaTeX auxiliares (el PDF SÍ se versiona: es entregable) -----------
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.run.xml
+*.toc
+*.lof
+*.lot
+*.out
+*.log
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(busy)
+*.idx
+*.ilg
+*.ind
+
+# --- Entorno y secretos -------------------------------------------------
+.env
+.env.*
+!.env.example
+*.properties.local
+application-local.properties
+*.pem
+*.key
+
+# --- IDE / sistema ------------------------------------------------------
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Respaldos y temporales --------------------------------------------
+*.backup
+*.bak
+*.tmp
+~$*

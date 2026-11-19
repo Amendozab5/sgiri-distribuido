@@ -1,0 +1,61 @@
+% =====================================================================
+%  referencias.bib — TA-PFC-E1
+%
+%  Reglas:
+%   1. El requisito es 8 referencias como mínimo, de los últimos cinco
+%      años (2021-2026), y al menos 4 artículos de revista indexada con
+%      DOI verificable.
+%   2. Las cuatro entradas de abajo son reales y verificables, pero las
+%      tres de 2012 y 2016 son clásicas: NO cuentan para el mínimo de
+%      "últimos cinco años". Sirven como fundamento (CAP, PACELC, caos).
+%   3. Antes de agregar una referencia: abrir https://doi.org/<DOI> y
+%      comprobar título, autores, revista, volumen, número, páginas y año.
+%      Un DOI que lleve a otra obra anula la entrega completa.
+%   4. Guardar en docs/referencias/ la respuesta de
+%      https://api.crossref.org/works/<DOI> como respaldo de la
+%      verificación.
+% =====================================================================
+
+@online{fastly2021,
+  author  = {Rockwell, Nick},
+  title   = {Summary of the {June} 8, 2021 Outage},
+  date    = {2021-06-08},
+  url     = {https://www.fastly.com/blog/summary-of-june-8-outage},
+  urldate = {2026-11-18},
+  note    = {Informe oficial del incidente},
+}
+
+@article{gilbert2012,
+  author       = {Gilbert, Seth and Lynch, Nancy},
+  title        = {Perspectives on the {CAP} Theorem},
+  journaltitle = {Computer},
+  volume       = {45},
+  number       = {2},
+  pages        = {30--36},
+  date         = {2012-02},
+  doi          = {10.1109/MC.2011.389},
+}
+
+@article{abadi2012,
+  author       = {Abadi, Daniel},
+  title        = {Consistency Tradeoffs in Modern Distributed Database System Design:
+                  {CAP} is Only Part of the Story},
+  journaltitle = {Computer},
+  volume       = {45},
+  number       = {2},
+  pages        = {37--42},
+  date         = {2012-02},
+  doi          = {10.1109/MC.2012.33},
+}
+
+@article{basiri2016,
+  author       = {Basiri, Ali and Blohowiak, Aaron and Hochstein, Lorin and Jones, Casey
+                  and Rosenthal, Haley},
+  title        = {Chaos Engineering},
+  journaltitle = {IEEE Software},
+  volume       = {33},
+  number       = {3},
+  pages        = {35--41},
+  date         = {2016-05},
+  doi          = {10.1109/MS.2016.60},
+}
