@@ -1,0 +1,11 @@
+# Selector de plantillas de issue
+# Documentación: https://docs.github.com/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository
+
+# Obliga a usar la plantilla: todo issue del tablero debe tener criterio de aceptación.
+# Cambiar a `true` si se necesitan issues en blanco para notas rápidas.
+blank_issues_enabled: false
+
+contact_links:
+  - name: Tablero del proyecto (E1 a E4)
+    url: https://github.com/Amendozab5/sgiri-distribuido/projects
+    about: Estado de las tareas, responsables y avance por entrega.
