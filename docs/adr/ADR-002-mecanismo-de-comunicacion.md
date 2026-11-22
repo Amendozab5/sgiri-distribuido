@@ -22,9 +22,9 @@ de la incidencia dependía de la subida del adjunto y terminaba en error 500.
 
 | # | Mecanismo | A favor | En contra | Medición de PE-U1 |
 |---|---|---|---|---|
-| A | **REST/JSON síncrono** | Simple, depurable con `curl`, contrato OpenAPI, sin infraestructura extra | Acoplamiento temporal; hay que poner timeouts explícitos | *(completar con la cifra medida)* |
-| B | gRPC | Contrato binario, menor latencia, *streaming* | Requiere `protoc` y generación de código; difícil de mostrar en capturas; sobredimensionado para E1 | *(completar)* |
-| C | Mensajería asíncrona (RabbitMQ) | Desacopla, absorbe picos, reintentos y cola de fallos | Requiere un *broker*; consistencia eventual; más difícil de explicar | *(completar)* |
+| A | **REST/JSON síncrono** | Simple, depurable con `curl`, contrato OpenAPI, sin infraestructura extra | Acoplamiento temporal; hay que poner timeouts explícitos | No medida en PE-U1. Sockets TCP con JSON, sin HTTP, dio una mediana de 0,05 a 0,15 ms en loopback, que sirve como cota inferior |
+| B | gRPC | Contrato binario, menor latencia, *streaming* | Requiere `protoc` y generación de código; difícil de mostrar en capturas; sobredimensionado para E1 | Mediana de 0,34 a 0,58 ms en loopback (equipo Mourad, 22/11) |
+| C | Mensajería asíncrona (RabbitMQ) | Desacopla, absorbe picos, reintentos y cola de fallos | Requiere un *broker*; consistencia eventual; más difícil de explicar | No medida en PE-U1. En la EXP-1 se citó una latencia media de 4,38 ms para RabbitMQ con mensajes de 100 KB (Ramadan et al., 2026) |
 | D | GraphQL | Una sola llamada para varias consultas | Complejidad de esquema y de autorización; no aporta en E1 | no medida |
 
 ## Decisión
@@ -64,9 +64,6 @@ Reglas obligatorias de la comunicación síncrona:
 - **Consistencia eventual en notificaciones:** aceptable para el negocio; se documenta en el
   análisis PACELC como `PA/EL`.
 
-**Pendiente antes de ratificar**
+**Lectura de las mediciones de PE-U1**
 
-Completar la columna de PE-U1 con las mediciones del equipo (latencia p50/p95 y throughput de REST
-frente a gRPC o mensajería en el equipo de trabajo). Si no hay medición propia, se hace un
-*benchmark* de dos horas el 22/11 y se anexa la tabla; sin cifras, este ADR queda como decisión
-justificada solo cualitativamente y pierde peso en D2.
+Las mediciones de PE-U1 (repositorio `PE-U1-MPZ`, carpeta `data/angel/2026-11-22/`) muestran que en loopback la diferencia entre sockets y gRPC es menor a un milisegundo. En una red real ese tiempo queda por debajo de la latencia de la propia red, así que la latencia no decide entre REST y gRPC en E1. Se elige REST por simplicidad de demostración y depuración. gRPC queda como candidato para la consulta `SVC-INC` → `SVC-TEC` en E2, si se necesita un contrato tipado y plazos por llamada.
