@@ -122,24 +122,24 @@ Dato crítico & En partición (CAP) & Sin partición (PACELC) & Consecuencia par
 \endfoot
 Estado del ticket & \textbf{CP}: se rechaza la escritura antes que aceptar un estado dudoso &
 \textbf{EC}: se espera la confirmación antes de responder &
-El técnico ve un error y reintenta; nunca ve un ticket «resuelto» que en realidad no lo está \\
+El técnico ve un error y reintenta; nunca ve un ticket «resuelto» que en realidad no lo está (RNF-02) \\
 \addlinespace
 Asignación al técnico & \textbf{CP}: no se asigna sin confirmación del servicio de técnicos &
 \textbf{EC}: consistencia antes que latencia &
 Si el servicio de técnicos no responde, el agente puede guardar el ticket como «sin asignar» y
-asignarlo después; no se pierde el caso \\
+asignarlo después; no se pierde el caso (RNF-02) \\
 \addlinespace
 Notificaciones y adjuntos & \textbf{AP}: se acepta el evento y se entrega cuando la red vuelva &
 \textbf{EL}: latencia antes que consistencia &
-El cliente recibe el aviso con retraso, pero el ticket ya existe \\
+El cliente recibe el aviso con retraso, pero el ticket ya existe (RNF-02, RNF-06) \\
 \addlinespace
 Consulta de disponibilidad de técnicos & \textbf{AP}: se responde con la última copia conocida &
 \textbf{EL} &
-El agente puede ver una disponibilidad desactualizada por segundos; el sistema lo advierte \\
+El agente puede ver una disponibilidad desactualizada por segundos; el sistema lo advierte (RNF-03) \\
 \addlinespace
 Auditoría de cambios & \textbf{AP}: se registra localmente y se replica después &
 \textbf{EL} &
-Ninguna operación se pierde del registro aunque el nodo de auditoría esté caído \\
+Ninguna operación se pierde del registro aunque el nodo de auditoría esté caído (RNF-01) \\
 \end{longtable}
 
 \section{Registros de decisiones de arquitectura}
