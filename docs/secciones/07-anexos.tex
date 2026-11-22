@@ -13,10 +13,15 @@ que el entrevistado dijo y que cada requisito tiene un lugar en la arquitectura.
 \toprule
 Cita del acta & Requisito & Decisión de arquitectura que lo atiende & Contenedor \\
 \midrule
-\pendiente{P\# y minuto} & RF-01 & Alta desacoplada del adjunto (ADR-002) & \texttt{SVC-INC} \\
-\pendiente{} & RNF-01 & Réplicas por servicio con verificación de salud (ADR-001) & \texttt{GW-01} \\
-\pendiente{} & RNF-02 & Mensajería para adjuntos; \texttt{503} controlado & \texttt{SVC-INC}, cola \\
-\pendiente{} & RF-11 / R-01 & Validación de la máquina de estados & \texttt{SVC-INC} \\
+Acta, P5 & RF-01 & Alta rápida y persistencia desacoplada del adjunto (ADR-002) & \texttt{SVC-INC} \\
+\addlinespace
+Acta, P6 & RF-02, RF-03 & Consulta y asignación de técnicos con balanceo de carga & \texttt{SVC-TEC} \\
+\addlinespace
+Acta, P10, P12 & RNF-01 & Réplicas por servicio con verificación de salud y RTO $<$ 30 min (ADR-001) & \texttt{GW-01} \\
+\addlinespace
+FORM-AC-01 (R-03) & RNF-02 & Mensajería asíncrona para adjuntos; respuesta \texttt{503} si proveedor falla & \texttt{SVC-INC}, cola \\
+\addlinespace
+FORM-AC-01 (R-01) & RF-11 / R-01 & Validación estricta de máquina de estados con \texttt{409 Conflict} & \texttt{SVC-INC} \\
 \bottomrule
 \end{tabularx}
 \end{table}
