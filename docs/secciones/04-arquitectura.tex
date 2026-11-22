@@ -196,9 +196,11 @@ R-03 & El alta de la incidencia depende de un servicio externo de adjuntos y ter
 Alta & Alto & Registrar el ticket primero y subir después, con tiempo límite y reintento; prueba con
 el servicio externo bloqueado \\
 \addlinespace
-R-04 & \pendiente{riesgo propio: por ejemplo, coherencia de datos entre el ticket y el técnico
-asignado} & \pd & \pd & \pendiente{} \\
+R-04 & Desincronización del estado del ticket o de la carga del técnico por fallo en la mensajería
+entre servicios & Media & Alto & Patrón Outbox transaccional con reintentos exponenciales y proceso
+diario de conciliación que detecta y subsana discrepancias entre bases de datos \\
 \addlinespace
-R-05 & \pendiente{riesgo propio: por ejemplo, dependencia de la conectividad del local del cliente}
-& \pd & \pd & \pendiente{} \\
+R-05 & Pérdida o intermitencia de conectividad móvil del técnico en el domicilio del cliente que
+impida reportar el avance en tiempo real & Alta & Medio & Persistencia local en cliente web móvil
+(IndexedDB) con cola de operaciones y sincronización diferida automática al restablecer conexión \\
 \end{longtable}
