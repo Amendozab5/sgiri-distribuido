@@ -1,4 +1,4 @@
-# SGIRI Distribuido — Sistema de Gestión de Incidencias
+﻿# SGIRI Distribuido — Sistema de Gestión de Incidencias
 
 Proyecto Fin de Curso (PFC) de **Aplicaciones Distribuidas**, 7.º nivel, paralelo B.
 Entrega **TA-PFC-E1**: definición, requisitos y arquitectura base del sistema distribuido.
@@ -61,20 +61,21 @@ Se compila desde cero al clonar el repositorio: no hay rutas absolutas ni archiv
 
 ## Ejecución del esqueleto
 
-> Pendiente hasta que el Líder de Desarrollo cierre la implementación (ver `src/README.md`).
-> Estas serán las instrucciones definitivas; se actualizan aquí el mismo día en que el esqueleto
-> funcione, no al final de la semana.
+Verificado el 22 de noviembre de 2026. Requiere Python 3.10 o superior y nada más.
 
 ```bash
 # Terminal 1 — servicio proveedor
-cd src/servicio-tecnicos && ./mvnw spring-boot:run      # http://localhost:8081
+cd src/servicio_tecnicos && python app.py       # http://localhost:8081
 
 # Terminal 2 — servicio consumidor
-cd src/servicio-incidencias && ./mvnw spring-boot:run   # http://localhost:8082
+cd src/servicio_incidencias && python app.py    # http://localhost:8082
 
 # Verificación
-curl http://localhost:8082/api/incidencias/1
+curl -i http://localhost:8082/api/incidencias/1
 ```
+
+Con el servicio de técnicos apagado, la misma llamada responde `503` (degradación controlada),
+no `500`. El detalle está en [`src/README.md`](src/README.md).
 
 ## Video de presentación
 
