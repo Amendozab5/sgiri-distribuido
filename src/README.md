@@ -1,46 +1,70 @@
 # `src/` — esqueleto funcional (TA-PFC-E1)
 
-Contrato de lo que debe existir en esta carpeta al cierre del **domingo 29 de noviembre de 2026**.
-No se requiere lógica de negocio completa: se requiere demostrar que la base técnica distribuida
-funciona y que un tercero la levanta siguiendo solo el `README.md` de la raíz.
+Dos servicios independientes que se comunican por **REST/JSON síncrono**, el mecanismo que decide
+el ADR-002. No tienen lógica de negocio: demuestran que la base técnica distribuida funciona.
 
-## Servicios
-
-| Servicio | Responsable | Puerto | Rol en el esqueleto |
+| Servicio | Puerto | Rol | Archivo |
 |---|---|---|---|
-| `servicio-tecnicos` | Angello | 8081 | Catálogo de técnicos y su disponibilidad. Es el servicio **proveedor**. |
-| `servicio-incidencias` | Angello | 8082 | Registra consultas de incidencia y **consume** al de técnicos para asignar. Es el servicio **consumidor**. |
+| `servicio-tecnicos` | 8081 | Proveedor: catálogo y disponibilidad de técnicos | `servicio_tecnicos/app.py` |
+| `servicio-incidencias` | 8082 | Consumidor: consulta al proveedor y devuelve los datos combinados | `servicio_incidencias/app.py` |
 
-## Interacción mínima exigida
+## Por qué Python y no Spring Boot
 
-1. `GET http://localhost:8081/api/tecnicos` → lista de técnicos (datos en memoria, sin base de datos en E1).
-2. `GET http://localhost:8081/api/tecnicos/{id}` → un técnico; `404` si no existe.
-3. `GET http://localhost:8082/api/incidencias/{id}` → la incidencia **con los datos del técnico
-   resueltos por llamada HTTP al puerto 8081** (no datos duplicados ni copiados a mano).
-4. `GET http://localhost:8081/actuator/health` y `:8082/actuator/health` → `{"status":"UP"}`.
+Para que el jurado pueda ejecutarlo **sin descargar dependencias ni instalar un JDK**: solo se
+necesita Python 3.10 o superior, que ya viene instalado o se instala en dos minutos. El objeto de
+E1 no es el framework, es demostrar la comunicación entre servicios y el comportamiento ante
+fallos. El día que se cambie de stack, el contrato (REST/JSON, timeout, `503`, correlación) sigue
+siendo el mismo.
 
-Si el puerto 8081 está apagado, el servicio de incidencias debe responder `503` con un mensaje
-claro, **no** un error 500 con traza. Esto es la mitigación mínima del riesgo R-02 y del R-03
-heredados de FORM-AC-01 (ver `docs/FORM-AC-01-insumos.md`).
+## Cómo se ejecuta
 
-## Requisitos técnicos de la implementación
+```powershell
+# Terminal 1
+cd src\servicio_tecnicos
+python app.py
 
-- Java 21 (LTS) y Maven Wrapper (`mvnw`). **No** usar Java 25 como en SGIRI: no está instalado en
-  los equipos del equipo y rompe la reproducibilidad.
-- Spring Boot 3.4.x. Sin base de datos en E1 (`Map` en memoria o `H2` en memoria).
-- Comunicación según ADR-002: REST/JSON síncrono con `RestClient` y timeout explícito
-  (`connect-timeout` y `read-timeout` de 2 s).
-- Propagar `X-Correlation-Id` en la llamada entre servicios y registrarlo en ambos logs.
-- `README.md` de la raíz con: requisitos, comandos exactos, URLs y resultado esperado.
+# Terminal 2
+cd src\servicio_incidencias
+python app.py
+```
 
-## Qué NO se construye en E1
+Verificación, en una tercera terminal:
 
-- Base de datos distribuida, réplicas o particionado (es E3).
-- Contenedores y API Gateway (es E2).
-- Autenticación completa, frontend o carga de archivos real.
+```powershell
+curl.exe -i http://localhost:8081/actuator/health
+curl.exe -i -H "X-Correlation-Id: prueba-001" http://localhost:8082/api/incidencias/1
+```
+
+La segunda llamada no devuelve datos guardados en el servicio de incidencias: el campo `tecnico`
+lo trae de una petición HTTP real al puerto 8081. Eso es lo que hay que mostrar en el video.
+
+## Comportamiento ante fallos (lo que se califica)
+
+1. Detener el servicio de técnicos (cerrar su terminal).
+2. Pedir de nuevo `http://localhost:8082/api/incidencias/1`.
+3. Debe responder **`503`** con `{"error": "el servicio de tecnicos no esta disponible",
+   "reintentar": true}`, **no** un `500` con traza.
+
+Esa es la mitigación del riesgo R-03 de FORM-AC-01: la incidencia se puede consultar aunque falle
+una dependencia. Es la tercera captura y es el argumento técnico más fuerte del esqueleto.
+
+## Qué hay que poder explicar en el video
+
+- Qué hace cada servicio y por qué son dos procesos distintos y no uno.
+- Qué pasa en el código cuando llega `GET /api/incidencias/1`.
+- Por qué el tiempo límite es de 2 segundos y qué evita.
+- Qué es `X-Correlation-Id` y para qué sirve cuando algo falla.
+- Por qué un `503` es mejor que un `500` en este caso.
+
+Si alguien del equipo no puede responder estas cinco preguntas, no está listo para la verificación
+oral del docente.
+
+## Qué no se construyó (y se dice en el documento)
+
+Base de datos, contenedores, API Gateway, autenticación y carga real de archivos: corresponden a E2,
+E3 y E4. En E1 se declara el alcance, no se finge.
 
 ## Capturas obligatorias (3)
 
-Guardar en `evidencias/capturas/` con el nombre `AAAA-MM-DD_HHMM_descripcion.png` y, en la misma
-imagen, mostrar: usuario del sistema, nombre de la máquina, fecha y hora, el comando ejecutado
-(`curl` o navegador) y la respuesta. Ver `evidencias/README.md`.
+Guardar en `evidencias/capturas/` como `AAAA-MM-DD_HHMM_descripcion.png`, mostrando en la misma
+imagen: usuario del sistema, nombre de la máquina, fecha y hora, el comando ejecutado y la respuesta.
