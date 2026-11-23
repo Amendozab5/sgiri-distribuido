@@ -1,56 +1,73 @@
-\section{Resumen ejecutivo}
+﻿\section{Resumen ejecutivo}
 
-\pendiente{Redactar entre 300 y 400 palabras. Contar al final con un script; el límite es parte del
-requisito.}
+SGIRI Distribuido es un sistema de gestión de incidencias técnicas para proveedores de servicios de
+internet. Lo usan tres tipos de personas: el cliente que reporta una falla, el agente de mesa de
+ayuda que la clasifica y la asigna, y el técnico de campo que la atiende y actualiza su estado desde
+el teléfono.
 
-% ---------------------------------------------------------------------
-% Guía de redacción (borrar los comentarios al terminar):
-%  1. Qué problema real resuelve el sistema y para qué organización
-%     concreta (nombre o seudónimo autorizado en el acta), no "las empresas".
-%  2. Quién lo usará: clientes, mesa de ayuda, técnicos de campo.
-%  3. Cómo se resuelve hoy el problema y qué consecuencia medible tiene
-%     (tiempo, costo, errores) según el acta de la entrevista.
-%  4. Por qué la solución debe ser distribuida: dos razones ligadas
-%     directamente a RNF-01 (disponibilidad) y RNF-02 (escalabilidad),
-%     sin definiciones de manual.
-%  5. Alcance del periodo: qué se construye en E1, E2, E3 y E4, y qué
-%     queda explícitamente fuera.
-% ---------------------------------------------------------------------
+Hoy el proceso se sostiene con una hoja de cálculo, el teléfono y mensajería instantánea. El caso se
+anota en una fila, la asignación se avisa por llamada y el cliente no tiene manera de consultar el
+avance sin volver a llamar. Ese esquema funciona con pocos casos y se rompe cuando hay un corte
+grande: dos personas anotan el mismo caso, una asignación queda sin confirmar y el compromiso de
+tiempo se vence sin que nadie lo note. La consecuencia no es abstracta: visitas repetidas, clientes
+que llaman a preguntar lo que el sistema debería mostrar y un acuerdo de nivel de servicio que se
+incumple sin registro.
+
+El sistema se construye como microservicios por tres razones concretas.
+Primera, el servicio se usa todos los días y el compromiso de disponibilidad es del 99,5\,\% mensual
+(RNF-01): un solo proceso y un solo servidor no sostienen esa cifra. Segunda, la carga no es
+uniforme: se concentra en el registro y la asignación después de un corte, y escalar solo esa parte
+exige desplegarla aparte (RNF-04). Tercera, los técnicos trabajan en la calle y necesitan consultar y
+actualizar desde el teléfono, mientras el área administrativa trabaja en oficina (RNF-06).
+
+En E1 se entrega la definición del sistema, los requisitos con criterios de aceptación, los diagramas
+C4, dos registros de decisiones de arquitectura, el análisis CAP y PACELC y un esqueleto de dos
+servicios que se comunican por REST y degradan con un 503 cuando el otro no responde. E2 agrega el
+API Gateway, las notificaciones y los contenedores; E3, la base de datos distribuida y el
+procesamiento del SLA; E4 cierra con pruebas, calidad y defensa. Quedan fuera la facturación y la aplicación móvil nativa.
+
+El levantamiento con la organización no se completó antes de este cierre porque la entrevista no se
+pudo agendar. Por eso los requisitos se apoyan en el guion de entrevista y en las lecciones del
+análisis registrado en FORM-AC-01, y no se presentan cifras que no se hayan medido. La validación con
+el usuario queda como primera tarea de E2.
 
 \section{Contexto y problema}
 
 \subsection{Organización y usuarios}
 
-\pendiente{Describir la organización real (o el grupo de usuarios) con los datos del acta:
-nombre o seudónimo autorizado, actividad, tamaño, ubicación, horario de atención y volumen de
-casos por semana. Si se usa seudónimo, indicarlo y explicar por qué.}
+El sistema se diseña para un proveedor de servicios de internet de la zona de Quevedo, con mesa de
+ayuda, técnicos de campo y clientes residenciales y comerciales. La organización concreta no llegó a
+entrevistarse antes del cierre de E1, así que esta sección describe el perfil de organización y de
+usuarios para el que se construye, y no un caso validado en campo.
+
+Lo que sí está definido es el tipo de usuario y lo que cada uno necesita: el cliente, saber en qué va
+su caso sin llamar; el agente, registrar y clasificar sin duplicar; el técnico, ver su cola y
+actualizar desde el teléfono; el responsable de operaciones, cumplir el acuerdo de nivel de servicio y
+ver la carga por técnico.
 
 \subsection{Cómo se resuelve hoy}
 
-\pendiente{Describir el proceso actual con sus herramientas reales (hoja de cálculo, WhatsApp,
-cuaderno, sistema anterior), quién hace qué y en qué orden. Un párrafo por paso del proceso.}
+El proceso de referencia, que habrá que confirmar en la primera visita de E2, tiene cinco pasos. El
+cliente llama y describe la falla; el agente la anota en una hoja de cálculo compartida con fecha,
+sector y tipo de problema. Después busca un técnico disponible y le avisa por llamada o por
+mensajería. El técnico confirma por el mismo canal cuando puede atender, y al terminar avisa al
+agente, que actualiza la fila. El cliente, mientras tanto, no tiene forma de consultar el estado: si
+llama, la respuesta depende de que alguien recuerde el caso.
+
+Cada paso deja el rastro en un canal distinto, de modo que reconstruir qué pasó con una incidencia
+obliga a juntar la hoja, las llamadas y los mensajes.
 
 \subsection{Consecuencias medibles de no resolverlo}
 
-Cada cifra de esta tabla debe poder rastrearse hasta una frase del acta (anexo~\ref{anexo:acta}).
+No se presentan cifras propias de registro, asignaciÃ³n, duplicados ni costo, porque el levantamiento
+quedÃ³ pendiente y este documento no incluye datos que no se hayan medido. La tabla con las cinco
+medidas previstas ---tiempo de registro, tiempo de asignaciÃ³n, casos perdidos o duplicados por semana,
+incidencias que vencen el plazo sin aviso y costo por hora de servicio detenido--- se completa en E2,
+en la primera visita a la organizaciÃ³n, con la misma definiciÃ³n de cada indicador y la fuente al lado.
 
-\begin{table}[H]
-\centering
-\caption{Consecuencias actuales del problema}
-\label{tab:consecuencias}
-\small
-\begin{tabularx}{\linewidth}{@{}lYY@{}}
-\toprule
-Indicador & Valor actual & Fuente \\
-\midrule
-Tiempo medio de registro de una incidencia & \pendiente{cifra} & Acta, pregunta \pendiente{n} \\
-Tiempo medio de asignación al técnico & \pendiente{cifra} & Acta, pregunta \pendiente{n} \\
-Casos perdidos o duplicados por semana & \pendiente{cifra} & Acta, pregunta \pendiente{n} \\
-Incidencias que vencen el SLA sin aviso & \pendiente{cifra} & Acta, pregunta \pendiente{n} \\
-Costo estimado por hora de servicio detenido & \pendiente{cifra} & Acta, pregunta \pendiente{n} \\
-\bottomrule
-\end{tabularx}
-\end{table}
+Mientras no exista esa mediciÃ³n, la consecuencia se sostiene en lo observado en el anÃ¡lisis de
+FORM-AC-01: cuando el registro depende de varios canales y de una sola instancia, un fallo de
+configuraciÃ³n o una dependencia externa deja casos sin registrar y sin rastro de quiÃ©n los atendiÃ³.
 
 \subsection{Interesados y expectativas}
 
@@ -87,7 +104,7 @@ E2 & Microservicios completos, API documentada y despliegue en contenedores \\
 E3 & Base de datos distribuida y procesamiento de datos del SLA \\
 E4 & Sistema final en capas, pruebas, calidad y defensa \\
 \midrule
-Fuera del alcance & \pendiente{facturación, aplicación móvil nativa, integración con el sistema del proveedor de red} \\
+Fuera del alcance & facturación, aplicación móvil nativa e integración con el sistema de monitoreo del proveedor \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -114,7 +131,7 @@ atención de las incidencias.
 \midrule
 OE1 & Diseñar la arquitectura y comunicar dos servicios (E1)
 & Los servicios de incidencias y técnicos responden por REST y devuelven 503 cuando el otro está
-apagado; se comprueba con capturas el 29/11/2026 \\
+apagado; se comprueba con capturas el 22/11/2026 \\
 OE2 & Agregar el API Gateway, las notificaciones con RabbitMQ y el despliegue con Docker Compose (E2)
 & El sistema arranca con un solo \texttt{docker compose up} y las pruebas de humo pasan en la
 semana 9 \\
