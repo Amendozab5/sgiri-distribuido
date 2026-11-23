@@ -47,9 +47,7 @@ CAP/PACELC de la sección~\ref{sec:cap} fija esa frontera dato por dato.
 
 \begin{figure}[H]
 \centering
-\figurapendiente{Exportar \texttt{c4-n1-contexto.png} desde
-\texttt{docs/diagramas/c4-n1-contexto.drawio} y reemplazar este recuadro por
-\textbackslash includegraphics}
+\includegraphics[width=\textwidth]{diagramas/C4-nivel-1-SGIRI.png}
 \caption{Diagrama de contexto de SGIRI Distribuido (nivel 1 del modelo C4).}
 \label{fig:c4n1}
 \end{figure}
@@ -58,8 +56,7 @@ CAP/PACELC de la sección~\ref{sec:cap} fija esa frontera dato por dato.
 
 \begin{figure}[H]
 \centering
-\figurapendiente{Exportar \texttt{c4-n2-contenedores.png} desde
-\texttt{docs/diagramas/c4-n2-contenedores.drawio}}
+\includegraphics[width=\textwidth]{diagramas/C4-nivel-2-SGIRI.png}
 \caption{Diagrama de contenedores: servicios, bases de datos y comunicación (nivel 2 del modelo C4).}
 \label{fig:c4n2}
 \end{figure}
@@ -125,24 +122,24 @@ Dato crítico & En partición (CAP) & Sin partición (PACELC) & Consecuencia par
 \endfoot
 Estado del ticket & \textbf{CP}: se rechaza la escritura antes que aceptar un estado dudoso &
 \textbf{EC}: se espera la confirmación antes de responder &
-El técnico ve un error y reintenta; nunca ve un ticket «resuelto» que en realidad no lo está \\
+El técnico ve un error y reintenta; nunca ve un ticket «resuelto» que en realidad no lo está (RNF-02) \\
 \addlinespace
 Asignación al técnico & \textbf{CP}: no se asigna sin confirmación del servicio de técnicos &
 \textbf{EC}: consistencia antes que latencia &
 Si el servicio de técnicos no responde, el agente puede guardar el ticket como «sin asignar» y
-asignarlo después; no se pierde el caso \\
+asignarlo después; no se pierde el caso (RNF-02) \\
 \addlinespace
 Notificaciones y adjuntos & \textbf{AP}: se acepta el evento y se entrega cuando la red vuelva &
 \textbf{EL}: latencia antes que consistencia &
-El cliente recibe el aviso con retraso, pero el ticket ya existe \\
+El cliente recibe el aviso con retraso, pero el ticket ya existe (RNF-02, RNF-06) \\
 \addlinespace
 Consulta de disponibilidad de técnicos & \textbf{AP}: se responde con la última copia conocida &
 \textbf{EL} &
-El agente puede ver una disponibilidad desactualizada por segundos; el sistema lo advierte \\
+El agente puede ver una disponibilidad desactualizada por segundos; el sistema lo advierte (RNF-03) \\
 \addlinespace
 Auditoría de cambios & \textbf{AP}: se registra localmente y se replica después &
 \textbf{EL} &
-Ninguna operación se pierde del registro aunque el nodo de auditoría esté caído \\
+Ninguna operación se pierde del registro aunque el nodo de auditoría esté caído (RNF-01) \\
 \end{longtable}
 
 \section{Registros de decisiones de arquitectura}
@@ -199,9 +196,11 @@ R-03 & El alta de la incidencia depende de un servicio externo de adjuntos y ter
 Alta & Alto & Registrar el ticket primero y subir después, con tiempo límite y reintento; prueba con
 el servicio externo bloqueado \\
 \addlinespace
-R-04 & \pendiente{riesgo propio: por ejemplo, coherencia de datos entre el ticket y el técnico
-asignado} & \pd & \pd & \pendiente{} \\
+R-04 & Desincronización del estado del ticket o de la carga del técnico por fallo en la mensajería
+entre servicios & Media & Alto & Patrón Outbox transaccional con reintentos exponenciales y proceso
+diario de conciliación que detecta y subsana discrepancias entre bases de datos \\
 \addlinespace
-R-05 & \pendiente{riesgo propio: por ejemplo, dependencia de la conectividad del local del cliente}
-& \pd & \pd & \pendiente{} \\
+R-05 & Pérdida o intermitencia de conectividad móvil del técnico en el domicilio del cliente que
+impida reportar el avance en tiempo real & Alta & Medio & Persistencia local en cliente web móvil
+(IndexedDB) con cola de operaciones y sincronización diferida automática al restablecer conexión \\
 \end{longtable}

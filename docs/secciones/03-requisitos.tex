@@ -5,16 +5,19 @@
 Formato de historia de usuario: \emph{Como} [rol], \emph{quiero} [acción], \emph{para}
 [beneficio]. Cada historia lleva al menos dos criterios de aceptación verificables, escritos como
 situación concreta con resultado esperado (dado / cuando / entonces).
+La columna de origen indica la pregunta del guion de entrevista de la que sale cada requisito.
+Como la entrevista no se realizó antes del cierre de E1, todos los orígenes están marcados como
+\emph{sin validar} (ver el anexo~\ref{anexo:acta}).
 
 \begin{longtable}{@{}c p{4.2cm} p{5.3cm} p{3.3cm}@{}}
 \caption{Historias de usuario y criterios de aceptación}
 \label{tab:rf}\\
 \toprule
-ID & Historia de usuario & Criterios de aceptación & Origen (acta) \\
+ID & Historia de usuario & Criterios de aceptación & Origen (guion) \\
 \midrule
 \endfirsthead
 \toprule
-ID & Historia de usuario & Criterios de aceptación & Origen (acta) \\
+ID & Historia de usuario & Criterios de aceptación & Origen (guion) \\
 \midrule
 \endhead
 \bottomrule
@@ -25,45 +28,103 @@ datos mínimos del cliente \textbf{para} no perder el caso mientras atiendo la l
 obligatorios, \emph{entonces} el sistema devuelve un número de ticket y lo muestra en menos de 2 s.
 \newline \emph{Dado} un formulario sin descripción, \emph{cuando} intento guardar, \emph{entonces}
 veo el error del campo y no se crea el ticket.
-& \pendiente{P\#, acta} \\
+& Guion, P5 (sin validar) \\
 \addlinespace
 RF-02 & \textbf{Como} agente, \textbf{quiero} ver los técnicos disponibles con su carga actual
-\textbf{para} asignar el caso a quien pueda atenderlo primero. & \pendiente{criterios} &
-\pendiente{P\#} \\
+\textbf{para} asignar el caso a quien pueda atenderlo primero.
+& \emph{Dado} que existen técnicos activos con tickets asignados, \emph{cuando} abro la vista de
+disponibilidad, \emph{entonces} el sistema lista cada técnico con su estado y la cantidad de tickets
+abiertos ordenados de menor a mayor carga.
+\newline \emph{Dado} que todos los técnicos están ocupados o inactivos, \emph{cuando} consulto la
+vista, \emph{entonces} el sistema muestra el aviso «Sin técnicos disponibles» sin bloquear la pantalla.
+\newline \emph{Dado} un caso clasificado como falla de fibra, \emph{cuando} abro la vista de
+disponibilidad, \emph{entonces} solo se listan los técnicos con especialidad en fibra.
+& Guion, P6 (sin validar) \\
 \addlinespace
 RF-03 & \textbf{Como} agente, \textbf{quiero} asignar un ticket a un técnico y notificarlo
-\textbf{para} que el trabajo empiece sin llamadas adicionales. & \pendiente{criterios} &
-\pendiente{P\#} \\
+\textbf{para} que el trabajo empiece sin llamadas adicionales.
+& \emph{Dado} un ticket en estado «Abierto» y un técnico activo, \emph{cuando} confirmo la asignación,
+\emph{entonces} el ticket pasa a «Asignado», se vincula al técnico y se encola una notificación con
+el número de ticket.
+\newline \emph{Dado} que el servicio de notificaciones no responde, \emph{cuando} confirmo la
+asignación, \emph{entonces} el ticket queda asignado y la notificación se marca como pendiente de
+reintento sin revertir el cambio.
+& Guion, P6 (sin validar) \\
 \addlinespace
 RF-04 & \textbf{Como} técnico, \textbf{quiero} ver mi cola de trabajo ordenada por vencimiento del
-SLA \textbf{para} priorizar mi recorrido del día. & \pendiente{criterios} & \pendiente{P\#} \\
+SLA \textbf{para} priorizar mi recorrido del día.
+& \emph{Dado} que tengo varios tickets asignados con distintos plazos de SLA, \emph{cuando} ingreso
+a mi cola de trabajo, \emph{entonces} se muestran ordenados de forma ascendente según el tiempo
+restante para su vencimiento.
+\newline \emph{Dado} un ticket cuyo SLA ya venció, \emph{cuando} visualizo mi cola, \emph{entonces}
+aparece al inicio de la lista con una etiqueta visible de «Vencido».
+& Guion, P10 (sin validar) \\
 \addlinespace
 RF-05 & \textbf{Como} técnico, \textbf{quiero} actualizar el estado del ticket desde el celular
-\textbf{para} que el cliente y la mesa de ayuda vean el avance en el momento. &
-\pendiente{criterios} & \pendiente{P\#} \\
+\textbf{para} que el cliente y la mesa de ayuda vean el avance en el momento.
+& \emph{Dado} un ticket asignado a mi cuenta en estado «Asignado», \emph{cuando} selecciono «En
+proceso» desde el navegador móvil y guardo, \emph{entonces} el estado se actualiza y registra la
+fecha y hora del cambio.
+\newline \emph{Dado} un ticket en estado «En proceso», \emph{cuando} lo marco como «Resuelto» con
+una nota de cierre, \emph{entonces} el estado cambia, se detiene el conteo del SLA y el avance queda
+visible para la mesa de ayuda y el cliente.
+& Guion, P13 (sin validar) \\
 \addlinespace
 RF-06 & \textbf{Como} técnico, \textbf{quiero} adjuntar una foto del trabajo realizado
-\textbf{para} respaldar el cierre del caso. & \pendiente{criterios} & \pendiente{P\#} \\
+\textbf{para} respaldar el cierre del caso.
+& \emph{Dado} un ticket en estado «En proceso» o «Resuelto», \emph{cuando} subo una imagen JPG o PNG
+de hasta 5 MB, \emph{entonces} el archivo se almacena y queda vinculado al detalle del ticket.
+\newline \emph{Dado} un archivo con formato no permitido o mayor a 5 MB, \emph{cuando} intento
+adjuntarlo, \emph{entonces} el sistema rechaza la carga y muestra un mensaje con el formato y tamaño
+admitidos.
+& Guion, P3 (sin validar) \\
 \addlinespace
 RF-07 & \textbf{Como} cliente, \textbf{quiero} consultar el estado de mi incidencia con el número
-de ticket \textbf{para} no tener que llamar a preguntar. & \pendiente{criterios} &
-\pendiente{P\#} \\
+de ticket \textbf{para} no tener que llamar a preguntar.
+& \emph{Dado} un número de ticket existente, \emph{cuando} lo ingreso en la consulta pública,
+\emph{entonces} el sistema muestra el estado actual y la fecha de última actualización sin exponer
+datos privados de terceros.
+\newline \emph{Dado} un número de ticket inexistente o mal formado, \emph{cuando} ejecuto la consulta,
+\emph{entonces} el sistema muestra «Ticket no encontrado» sin revelar información interna.
+& Guion, P9 (sin validar) \\
 \addlinespace
 RF-08 & \textbf{Como} responsable de operaciones, \textbf{quiero} ver el cumplimiento del SLA por
-técnico y por periodo \textbf{para} detectar dónde se incumple. & \pendiente{criterios} &
-\pendiente{P\#} \\
+técnico y por periodo \textbf{para} detectar dónde se incumple.
+& \emph{Dado} un rango de fechas con tickets cerrados, \emph{cuando} genero el reporte,
+\emph{entonces} el sistema muestra por cada técnico el total atendido, cuántos cumplieron el SLA y
+el porcentaje de cumplimiento.
+\newline \emph{Dado} un rango donde la fecha de inicio es posterior a la de fin, \emph{cuando}
+solicito el reporte, \emph{entonces} el sistema muestra un error de validación y no ejecuta la consulta.
+& Guion, P11 (sin validar) \\
 \addlinespace
 RF-09 & \textbf{Como} responsable de operaciones, \textbf{quiero} reasignar un ticket vencido
-\textbf{para} recuperar el caso antes de que se cierre el mes. & \pendiente{criterios} &
-\pendiente{P\#} \\
+\textbf{para} recuperar el caso antes de que se cierre el mes.
+& \emph{Dado} un ticket con SLA vencido asignado al técnico A, \emph{cuando} selecciono al técnico B
+y registro el motivo, \emph{entonces} el ticket pasa a la cola del técnico B, se notifica a ambos y
+el cambio queda en el historial.
+\newline \emph{Dado} un ticket en estado «Cerrado», \emph{cuando} intento reasignarlo, \emph{entonces}
+el sistema bloquea la acción e indica que un ticket cerrado no puede reasignarse.
+& Guion, P8 (sin validar) \\
 \addlinespace
 RF-10 & \textbf{Como} administrador, \textbf{quiero} crear y desactivar cuentas de técnicos
-\textbf{para} controlar quién accede al sistema. & \pendiente{criterios} & \pendiente{P\#} \\
+\textbf{para} controlar quién accede al sistema.
+& \emph{Dado} un correo no registrado y los datos obligatorios del técnico, \emph{cuando} creo la
+cuenta, \emph{entonces} se guarda con contraseña cifrada y el usuario puede iniciar sesión con rol de
+técnico.
+\newline \emph{Dado} un técnico activo, \emph{cuando} desactivo su cuenta, \emph{entonces} no puede
+iniciar sesión nuevamente y deja de aparecer como disponible para nuevas asignaciones.
+& Guion, P1 (sin validar) \\
 \addlinespace
 RF-11 & \textbf{Como} sistema, \textbf{quiero} rechazar una transición de estado no permitida
 \textbf{para} que ningún ticket quede atrapado ni con el SLA corriendo por error (riesgo R-01 de
-FORM-AC-01). & \pendiente{transición inválida devuelve \texttt{409} y el estado no cambia} &
-FORM-AC-01 \\
+FORM-AC-01).
+& \emph{Dado} un ticket en estado «Abierto», \emph{cuando} se intenta pasarlo directamente a
+«Cerrado» sin transitar por «Asignado» y «Resuelto», \emph{entonces} la API devuelve
+\texttt{409 Conflict} y el estado no cambia.
+\newline \emph{Dado} un ticket en estado «Cerrado», \emph{cuando} se recibe una petición para
+devolverlo a «En proceso», \emph{entonces} la API devuelve \texttt{409 Conflict}, mantiene el estado
+«Cerrado» y registra el intento en el log de auditoría.
+& FORM-AC-01 \\
 \end{longtable}
 
 \subsection{Requisitos no funcionales}
@@ -91,7 +152,7 @@ incidencias, equivalente a un máximo de 3,6 h de indisponibilidad al mes.
 \addlinespace
 RNF-02 & Fiabilidad (tolerancia a fallos) & Si el servicio de adjuntos o el proveedor externo no
 responde, el alta de la incidencia sigue funcionando: responde en menos de 2 s y el ticket se
-registra. \emph{(propuesta inicial, derivada del riesgo R-03 de FORM-AC-01; validar con el acta)}
+registra.
 & Prueba con el servicio de adjuntos detenido: el ticket se crea y el adjunto queda pendiente. \\
 \addlinespace
 RNF-03 & Eficiencia de desempeño (comportamiento temporal) & El 95\,\% de las consultas de
@@ -114,14 +175,3 @@ RNF-07 & Compatibilidad (interoperabilidad) & La API se publica con contrato Ope
 y responde JSON válido a un cliente distinto del propio (por ejemplo, \texttt{curl}).
 & Validación del contrato y prueba con cliente externo. \\
 \end{longtable}
-
-% ---------------------------------------------------------------------
-% Recordatorio (borrar al terminar):
-%  - Un RNF sin cifra se califica con nivel 1 o 0. «El sistema será
-%    rápido» no es un requisito.
-%  - La cifra debe venir del acta o de un acuerdo con la organización;
-%    si es una propuesta del equipo, se dice.
-%  - Cada RNF debe aparecer luego en la justificación de la arquitectura
-%    y en el análisis CAP/PACELC. Si un RNF no se usa en ninguna de las
-%    dos, sobra o falta explicarlo.
-% ---------------------------------------------------------------------

@@ -13,24 +13,29 @@ indica qué se toma y en qué se diferencia el proyecto.
 \toprule
 \# & Obra & Qué resuelve & Qué tomamos & En qué nos diferenciamos \\
 \midrule
-1 & \pendiente{autor, año} & \pendiente{problema y contexto} & \pendiente{decisión o modelo adoptado} & \pendiente{diferencia concreta, no «es más moderno»} \\
-2 & \pendiente{autor, año} & & & \\
-3 & \pendiente{autor, año} & & & \\
+1 & Li et al. (2022)~\cite{li2022incident}
+  & Detección proactiva de incidentes y generación automatizada de tickets ante degradación de
+    rendimiento en servicios en la nube a gran escala.
+  & Desacoplar el registro inicial del ticket del procesamiento de adjuntos y notificaciones para
+    garantizar persistencia inmediata sin bloqueo.
+  & Li et al. gestionan incidentes internos de centros de datos y telemetría; SGIRI atiende clientes
+    residenciales de ISP, coordinando visitas de técnicos en campo con SLA en horas. \\
+\addlinespace
+2 & Harsh et al. (2023)~\cite{harsh2023murphy}
+  & Diagnóstico y aislamiento de degradaciones intermitentes de rendimiento correlacionando reportes
+    en tickets de soporte con trazas distribuidas.
+  & Propagación de identificadores de correlación (\texttt{X-Correlation-Id}) en cada petición para
+    auditar la trazabilidad completa del ticket entre microservicios.
+  & Murphy enfoca el diagnóstico automático de trazas RPC; SGIRI aborda el flujo operativo humano
+    completo: asignación por carga, seguimiento móvil y validación de evidencias. \\
+\addlinespace
+3 & Li et al. (2023)~\cite{li2023identifying}
+  & Identificación de cambios de versión o configuración causantes de incidencias reportadas por
+    usuarios en sistemas de servicios en línea.
+  & Validación estricta de precondiciones y máquina de estados en el límite de la API para rechazar
+    transiciones erróneas antes de despachar tareas al personal.
+  & Su estudio se centra en incidentes de código en SaaS; SGIRI atiende la logística de técnicos
+    desplazados con conectividad móvil intermitente y gestión de cuadrillas locales. \\
 \bottomrule
 \end{tabularx}
 \end{table}
-
-% ---------------------------------------------------------------------
-% Criterios para elegir las obras (borrar al terminar):
-%
-%  - Al menos una debe ser un artículo de revista indexada de los últimos
-%    cinco años, con DOI verificado en https://doi.org.
-%  - No sirve comparar con la documentación de un producto comercial
-%    (Jira, Zendesk) como si fuera un trabajo publicado: si se menciona,
-%    va en el texto, no en esta tabla.
-%  - La columna «En qué nos diferenciamos» debe hablar del contexto
-%    (proveedor de internet, técnicos de campo, SLA en horas), no de la
-%    cantidad de funciones.
-%  - El caso Fastly de FORM-AC-01 NO es un trabajo relacionado: es un
-%    incidente y se usa en riesgos y justificación.
-% ---------------------------------------------------------------------

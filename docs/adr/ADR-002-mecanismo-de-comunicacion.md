@@ -22,9 +22,9 @@ de la incidencia dependía de la subida del adjunto y terminaba en error 500.
 
 | # | Mecanismo | A favor | En contra | Medición de PE-U1 |
 |---|---|---|---|---|
-| A | **REST/JSON síncrono** | Simple, depurable con `curl`, contrato OpenAPI, sin infraestructura extra | Acoplamiento temporal; hay que poner timeouts explícitos | *(completar con la cifra medida)* |
-| B | gRPC | Contrato binario, menor latencia, *streaming* | Requiere `protoc` y generación de código; difícil de mostrar en capturas; sobredimensionado para E1 | *(completar)* |
-| C | Mensajería asíncrona (RabbitMQ) | Desacopla, absorbe picos, reintentos y cola de fallos | Requiere un *broker*; consistencia eventual; más difícil de explicar | *(completar)* |
+| A | **REST/JSON síncrono** | Simple, depurable con `curl`, contrato OpenAPI, sin infraestructura extra | Acoplamiento temporal; hay que poner timeouts explícitos | No medida en PE-U1. Sockets TCP con JSON, sin HTTP, dio una mediana de 0,05 a 0,15 ms en loopback, que sirve como cota inferior |
+| B | gRPC | Contrato binario, menor latencia, *streaming* | Requiere `protoc` y generación de código; difícil de mostrar en capturas; sobredimensionado para E1 | Mediana de 0,34 a 0,58 ms en loopback (equipo Mourad, 22/11) |
+| C | Mensajería asíncrona (RabbitMQ) | Desacopla, absorbe picos, reintentos y cola de fallos | Requiere un *broker*; consistencia eventual; más difícil de explicar | No medida en PE-U1. En la EXP-1 se citó una latencia media de 4,38 ms para RabbitMQ con mensajes de 100 KB (Ramadan et al., 2026) |
 | D | GraphQL | Una sola llamada para varias consultas | Complejidad de esquema y de autorización; no aporta en E1 | no medida |
 
 ## Decisión
@@ -64,9 +64,17 @@ Reglas obligatorias de la comunicación síncrona:
 - **Consistencia eventual en notificaciones:** aceptable para el negocio; se documenta en el
   análisis PACELC como `PA/EL`.
 
-**Pendiente antes de ratificar**
+**Lectura de las mediciones de PE-U1**
 
-Completar la columna de PE-U1 con las mediciones del equipo (latencia p50/p95 y throughput de REST
-frente a gRPC o mensajería en el equipo de trabajo). Si no hay medición propia, se hace un
-*benchmark* de dos horas el 22/11 y se anexa la tabla; sin cifras, este ADR queda como decisión
-justificada solo cualitativamente y pierde peso en D2.
+En PE-U1 medí la latencia de ida y vuelta de sockets TCP con JSON y de gRPC con protobuf en mi
+equipo (Windows 11 Pro, i7-10700, 15,8 GiB, Python 3.14.2), todo en localhost, con mensajes de
+100 bytes y 10 KB, en modo secuencial y con tres clientes a la vez (`data/angel/2026-11-22/` del
+repositorio PE-U1-MPZ). Las medianas fueron de 0,05 a 0,15 ms con sockets y de 0,34 a 0,58 ms con
+gRPC; la medición no separa el transporte de la serialización. Esa diferencia, de unas cuatro
+décimas de milisegundo, no la nota un técnico que trabaja con datos móviles, porque solo el viaje
+del paquete por la red tarda mucho más. Como la velocidad casi no cambia, en E1 se elige REST por
+lo práctico: se prueba desde el navegador o Postman sin generar código, Angular lo llama directo
+sin gRPC-Web ni proxy, y el SGIRI original ya está hecho así (`TicketController`,
+`VisitaTecnicaController`). gRPC tendría sentido en E2 entre servicios internos, como la consulta
+de `SVC-INC` a `SVC-TEC`, porque el `.proto` fija los campos y sus tipos y un cambio de un lado
+falla al compilar y no en producción. Lo que usan los clientes seguiría siendo REST.

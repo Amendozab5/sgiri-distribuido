@@ -26,6 +26,24 @@ A esto se suma el riesgo **R-02** heredado de FORM-AC-01: el sistema anterior co
 instancia; una credencial mal configurada en un despliegue deja el servicio completo caído. En
 Fastly, un solo cambio de configuración afectó al 85 % de la red.
 
+También pesa el riesgo de exposición del caso X, analizado en FORM-AC-01. El 10 de marzo de 2025,
+la red social X sufrió varias caídas y miles de usuarios no podían entrar a sus cuentas, cargar el
+feed ni publicar. Downdetector registró más de 40 000 reportes. Elon Musk lo atribuyó a un "ataque
+cibernético masivo", y varios analistas lo identificaron como un ataque DDoS. Lo que más sirve de
+este caso es cómo entraron. Según los investigadores, algunos servidores de origen de X no estaban
+detrás de la protección DDoS de Cloudflare, así que estaban visibles y se podían atacar
+directamente. Ciaran Martin, exdirector del Centro Nacional de Ciberseguridad del Reino Unido, lo
+explicó así: X dejó algunos de sus servidores delante de la protección de Cloudflare y no detrás.
+Para el SGIRI, que hoy es un solo backend en Spring Boot, la lección es que separar en servicios
+aumenta las puertas de entrada. Si dividimos incidencias, técnicos, notificaciones e identidad, solo
+el API Gateway debería quedar expuesto, con límite de peticiones por ruta. Los demás servicios
+deberían quedar en una red interna y no se debería poder llegar a ellos por su IP. Así, si alguien
+satura el portal de clientes, los técnicos pueden seguir atendiendo incidencias.
+
+Fuentes: [Reuters, 10/03/2025](https://www.brecorder.com/news/amp/40352214);
+[AP, 10/03/2025](https://bronx.news12.com/elon-musk-claims-x-being-targeted-in-massive-cyberattack-as-service-goes-down);
+[Field Effect](https://fieldeffect.com/blog/x-massive-ddos-attack).
+
 ## Opciones consideradas
 
 | # | Opción | A favor | En contra |
