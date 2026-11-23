@@ -96,7 +96,10 @@ Fuera del alcance & \pendiente{facturación, aplicación móvil nativa, integrac
 
 \subsection{Objetivo general}
 
-\pendiente{Un solo objetivo, con verbo en infinitivo y resultado observable al final del periodo.}
+Construir el SGIRI como un sistema distribuido que permita a un proveedor de internet registrar
+cualquier incidencia técnica que reporten sus clientes y asignarla a un técnico especializado en
+ese tipo de problema, de modo que una falla en una parte del sistema no detenga el registro ni la
+atención de las incidencias.
 
 \subsection{Objetivos específicos e indicadores}
 
@@ -109,10 +112,18 @@ Fuera del alcance & \pendiente{facturación, aplicación móvil nativa, integrac
 \toprule
 \# & Objetivo específico & Indicador con que se comprueba \\
 \midrule
-OE1 & \pendiente{objetivo} & \pendiente{indicador con meta numérica y fecha de medición} \\
-OE2 & \pendiente{objetivo} & \pendiente{indicador} \\
-OE3 & \pendiente{objetivo} & \pendiente{indicador} \\
-OE4 & \pendiente{objetivo} & \pendiente{indicador} \\
+OE1 & Diseñar la arquitectura y comunicar dos servicios (E1)
+& Los servicios de incidencias y técnicos responden por REST y devuelven 503 cuando el otro está
+apagado; se comprueba con capturas el 29/11/2026 \\
+OE2 & Agregar el API Gateway, las notificaciones con RabbitMQ y el despliegue con Docker Compose (E2)
+& El sistema arranca con un solo \texttt{docker compose up} y las pruebas de humo pasan en la
+semana 9 \\
+OE3 & Probar la tolerancia a fallos y la carga (E3)
+& Con 200 usuarios simultáneos, el 95\,\% de las consultas responde en menos de 300~ms (RNF-03 y
+RNF-04), medido en la semana 13 \\
+OE4 & Entregar el sistema completo con todos los requisitos funcionales (E4)
+& Los 11 requisitos funcionales pasan sus criterios de aceptación y la disponibilidad medida
+llega al 99,5\,\% (RNF-01) en la semana 17 \\
 \bottomrule
 \end{tabularx}
 \end{table}
