@@ -79,8 +79,12 @@ no `500`. El detalle está en [`src/README.md`](src/README.md).
 
 ## Video de presentación
 
-> Pendiente. Enlace público de 5 a 7 minutos: cada integrante explica su rol y se muestra el
-> esqueleto en ejecución. Se publica aquí y en la entrega del SGA.
+**Enlace:** <https://youtu.be/sGZ_jgpv9NI>
+
+Duración: 5 a 7 minutos. Cada integrante explica la parte de la que es responsable y se muestra el
+esqueleto en ejecución: la llamada entre los dos servicios y la respuesta `503` cuando el proveedor
+no está disponible.
+
 
 ## Tablero de trabajo
 
