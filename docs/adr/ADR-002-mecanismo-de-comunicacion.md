@@ -66,4 +66,15 @@ Reglas obligatorias de la comunicación síncrona:
 
 **Lectura de las mediciones de PE-U1**
 
-Las mediciones de PE-U1 (repositorio `PE-U1-MPZ`, carpeta `data/angel/2026-11-22/`) muestran que en loopback la diferencia entre sockets y gRPC es menor a un milisegundo. En una red real ese tiempo queda por debajo de la latencia de la propia red, así que la latencia no decide entre REST y gRPC en E1. Se elige REST por simplicidad de demostración y depuración. gRPC queda como candidato para la consulta `SVC-INC` → `SVC-TEC` en E2, si se necesita un contrato tipado y plazos por llamada.
+En PE-U1 medí la latencia de ida y vuelta de sockets TCP con JSON y de gRPC con protobuf en mi
+equipo (Windows 11 Pro, i7-10700, 15,8 GiB, Python 3.14.2), todo en localhost, con mensajes de
+100 bytes y 10 KB, en modo secuencial y con tres clientes a la vez (`data/angel/2026-11-22/` del
+repositorio PE-U1-MPZ). Las medianas fueron de 0,05 a 0,15 ms con sockets y de 0,34 a 0,58 ms con
+gRPC; la medición no separa el transporte de la serialización. Esa diferencia, de unas cuatro
+décimas de milisegundo, no la nota un técnico que trabaja con datos móviles, porque solo el viaje
+del paquete por la red tarda mucho más. Como la velocidad casi no cambia, en E1 se elige REST por
+lo práctico: se prueba desde el navegador o Postman sin generar código, Angular lo llama directo
+sin gRPC-Web ni proxy, y el SGIRI original ya está hecho así (`TicketController`,
+`VisitaTecnicaController`). gRPC tendría sentido en E2 entre servicios internos, como la consulta
+de `SVC-INC` a `SVC-TEC`, porque el `.proto` fija los campos y sus tipos y un cambio de un lado
+falla al compilar y no en producción. Lo que usan los clientes seguiría siendo REST.
