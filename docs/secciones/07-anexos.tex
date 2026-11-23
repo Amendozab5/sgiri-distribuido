@@ -6,18 +6,18 @@ que el entrevistado dijo y que cada requisito tiene un lugar en la arquitectura.
 
 \begin{table}[H]
 \centering
-\caption{Trazabilidad: acta $\rightarrow$ requisito $\rightarrow$ contenedor}
+\caption{Trazabilidad: pregunta del guion $\rightarrow$ requisito $\rightarrow$ contenedor}
 \label{tab:trazabilidad}
 \small
 \begin{tabularx}{\linewidth}{@{}llYl@{}}
 \toprule
-Cita del acta & Requisito & Decisión de arquitectura que lo atiende & Contenedor \\
+Pregunta del guion & Requisito & Decisión de arquitectura que lo atiende & Contenedor \\
 \midrule
-Acta, P5 & RF-01 & Alta rápida y persistencia desacoplada del adjunto (ADR-002) & \texttt{SVC-INC} \\
+Guion, P5 (sin validar) & RF-01 & Alta rápida y persistencia desacoplada del adjunto (ADR-002) & \texttt{SVC-INC} \\
 \addlinespace
-Acta, P6 & RF-02, RF-03 & Consulta y asignación de técnicos con balanceo de carga & \texttt{SVC-TEC} \\
+Guion, P6 (sin validar) & RF-02, RF-03 & Consulta y asignación de técnicos con balanceo de carga & \texttt{SVC-TEC} \\
 \addlinespace
-Acta, P10, P12 & RNF-01 & Réplicas por servicio con verificación de salud y RTO $<$ 30 min (ADR-001) & \texttt{GW-01} \\
+Guion, P10, P12 (sin validar) & RNF-01 & Réplicas por servicio con verificación de salud y RTO $<$ 30 min (ADR-001) & \texttt{GW-01} \\
 \addlinespace
 FORM-AC-01 (R-03) & RNF-02 & Mensajería asíncrona para adjuntos; respuesta \texttt{503} si proveedor falla & \texttt{SVC-INC}, cola \\
 \addlinespace
@@ -29,9 +29,11 @@ FORM-AC-01 (R-01) & RF-11 / R-01 & Validación estricta de máquina de estados c
 \section{Acta de levantamiento de información}
 \label{anexo:acta}
 
-\pendiente{Insertar el acta firmada (escaneo o transcripción fiel) con nombre, cargo, organización,
-fecha y firma del entrevistado. Si se usó grabación, incluir el enlace y el consentimiento. Si se
-usó encuesta, incluir el instrumento y los resultados crudos, con la fecha de recolección.}
+La entrevista con el proveedor de internet no se realizó antes del cierre de E1, porque el
+entrevistado no estuvo disponible. Por eso no hay acta firmada ni grabación. Los requisitos citan
+la pregunta del guion (\texttt{docs/levantamiento/guion-entrevista.md}) de la que se espera
+obtener el dato, marcada como \emph{sin validar}, y las cifras de la línea base quedan pendientes.
+La entrevista se hará antes de E2; con sus respuestas se ajustarán los requisitos y esta tabla.
 
 \section{Verificación de referencias}
 
