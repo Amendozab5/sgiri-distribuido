@@ -2,7 +2,7 @@
 
 Proyecto Fin de Curso (PFC) de **Aplicaciones Distribuidas**, 7.º nivel, paralelo B.
 Entrega **TA-PFC-E1**: definición, requisitos y arquitectura base del sistema distribuido.
-Cierre de la entrega: **domingo 29 de noviembre de 2026, 23:55**.
+Cierre de la entrega: **domingo 22 de noviembre de 2026, 23:59**.
 
 SGIRI resuelve la gestión de incidencias técnicas de un proveedor de servicios de internet: alta
 del ticket, asignación al técnico, seguimiento del SLA y comunicación con el cliente. El sistema se
