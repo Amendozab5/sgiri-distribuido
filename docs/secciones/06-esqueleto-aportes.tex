@@ -36,28 +36,28 @@ cd src/servicio_incidencias && python app.py    # http://localhost:8082
 curl -i http://localhost:8082/api/incidencias/1
 \end{verbatim}
 
-\pendiente{Agregar aquí la salida real de la verificación, con fecha de la ejecución.}
+La verificación se hizo el 22 de noviembre de 2026 a las 21:15, 21:19 y 21:23; las salidas completas están en las figuras~\ref{fig:captura1} a~\ref{fig:captura3}.
 
 \subsection{Evidencia de ejecución}
 
 \begin{figure}[H]
 \centering
-\figurapendiente{Captura 1: ambos servicios en marcha, con usuario, máquina, fecha y hora visibles}
-\caption{Esqueleto en ejecución: servicios activos y llamada entre ellos.}
+\includegraphics[width=\linewidth]{figuras/captura-01-servicios.png}
+\caption{Servicios en ejecución y verificación de salud, 22 de noviembre de 2026, 21:15.}
 \label{fig:captura1}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\figurapendiente{Captura 2: respuesta combinada del consumidor con los datos del proveedor}
-\caption{Respuesta del servicio de incidencias con datos resueltos del servicio de técnicos.}
+\includegraphics[width=\linewidth]{figuras/captura-02-combinada.png}
+\caption{Respuesta del servicio de incidencias con el técnico resuelto por llamada HTTP al proveedor, 21:19.}
 \label{fig:captura2}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\figurapendiente{Captura 3: degradación controlada con el proveedor detenido (503, no 500)}
-\caption{Comportamiento ante la caída del servicio proveedor: degradación controlada.}
+\includegraphics[width=\linewidth]{figuras/captura-03-degradacion.png}
+\caption{Degradación controlada: con el proveedor detenido, el consumidor responde \texttt{503} y no \texttt{500}, 21:23.}
 \label{fig:captura3}
 \end{figure}
 
@@ -76,7 +76,7 @@ con los números definitivos.
 Integrante & Aporte principal & Enlaces \\
 \midrule
 Angel (\texttt{@iMouraad}) & Arquitectura, ADR, C4, CAP/PACELC, documento & 18/11: \href{https://github.com/Amendozab5/sgiri-distribuido/commit/6f8f891}{\texttt{6f8f891}}, \href{https://github.com/Amendozab5/sgiri-distribuido/commit/5e2a7c6}{\texttt{5e2a7c6}} (C4 n1); 22/11: \href{https://github.com/Amendozab5/sgiri-distribuido/commit/1862973}{\texttt{1862973}} (C4 n2), \href{https://github.com/Amendozab5/sgiri-distribuido/commit/d291577}{\texttt{d291577}}, \href{https://github.com/Amendozab5/sgiri-distribuido/commit/79993a0}{\texttt{79993a0}} (ADR-002), \href{https://github.com/Amendozab5/sgiri-distribuido/commit/3458e05}{\texttt{3458e05}} (ADR-001) \\
-Angello (\texttt{@Amendozab5}) & Esqueleto, comunicación, ejecución, capturas & \pendiente{commits e issues} \\
+Angello (\texttt{@Amendozab5}) & Esqueleto, comunicación, ejecución, capturas & \href{https://github.com/Amendozab5/sgiri-distribuido/commit/8919628}{\texttt{8919628}} (esqueleto), \href{https://github.com/Amendozab5/sgiri-distribuido/commit/737ae61}{\texttt{737ae61}} (filtro y capturas), \href{https://github.com/Amendozab5/sgiri-distribuido/commit/a1ede14}{\texttt{a1ede14}} (integración) \\
 César (\texttt{@CesarMacias007}) & Requisitos, riesgos, pruebas, coherencia & 22/11: \href{https://github.com/Amendozab5/sgiri-distribuido/commit/95b1375}{\texttt{95b1375}} (RF-01--11, RNF, riesgos R-04/05, relacionados), \href{https://github.com/Amendozab5/sgiri-distribuido/commit/7c567e8}{\texttt{7c567e8}} (trazabilidad anexos) \\
 \bottomrule
 \end{tabularx}
@@ -92,11 +92,11 @@ César (\texttt{@CesarMacias007}) & Requisitos, riesgos, pruebas, coherencia & 2
 \toprule
 Herramienta y versión & Para qué se usó & Qué se verificó & Cómo se verificó \\
 \midrule
-Claude (Anthropic), Angel & Generar los diagramas C4 de nivel 1 y 2 en draw.io a partir de los servicios definidos por el equipo; redactar el párrafo de lectura de mediciones del ADR-002; revisar la redacción del párrafo del caso X del ADR-001, escrito por Angel; preparar el PDF de una página del SGA & Que los servicios y flechas del C4 coincidan con el ADR-001 y la tabla de comunicación; que las cifras del ADR-002 sean las de los CSV de PE-U1; que los hechos del caso X tengan fuente & Comparación manual con el ADR-001 y la tabla~\ref{tab:comunicacion}; recálculo de las medianas desde \texttt{data/angel/2026-11-22/} del repositorio PE-U1-MPZ; revisión de las fuentes enlazadas \\
+Claude (Anthropic), Angel & Generar los diagramas C4 de nivel 1 y 2 en draw.io a partir de los servicios definidos por el equipo; redactar el párrafo de lectura de mediciones del ADR-002; revisar la redacción del párrafo del caso Fastly del ADR-001, escrito por Angel; preparar el PDF de una página del SGA & Que los servicios y flechas del C4 coincidan con el ADR-001 y la tabla de comunicación; que las cifras del ADR-002 sean las de los CSV de PE-U1; que los hechos del caso Fastly tengan fuente & Comparación manual con el ADR-001 y la tabla~\ref{tab:comunicacion}; recálculo de las medianas desde \texttt{data/angel/2026-11-22/} del repositorio PE-U1-MPZ; revisión de las fuentes enlazadas \\
 \addlinespace
 Antigravity / Gemini, César & Asistencia en la estructuración de criterios de aceptación de RF-01 a RF-11, redacción de métricas para RNF según ISO/IEC 25010, formulación de mitigaciones de riesgos técnicos R-04 y R-05, y redacción de la comparación con trabajos relacionados indexados & Que los criterios de aceptación estuvieran en formato Dado/Cuando/Entonces y coherentes con el guion de entrevista; que los RNF fueran medibles y cuantificados; que las mitigaciones abordaran la naturaleza distribuida; que los DOIs fueran reales y de revistas/congresos IEEE/ACM posteriores a 2021 & Revisión y cotejo manual contra \texttt{docs/levantamiento/guion-entrevista.md} y \texttt{docs/FORM-AC-01-insumos.md}; comprobación de metadatos de los tres DOIs en Crossref y doi.org; validación de compilación sintáctica en el documento \\
 \addlinespace
-\pendiente{Angello} & \pendiente{} & \pendiente{} & \pendiente{} \\
+Asistente de IA en el editor & Generar el esqueleto de los dos servicios en Python, las instrucciones de ejecución del README y la organización de las capturas & Que los servicios arrancaran, respondieran \texttt{200} con el técnico resuelto y \texttt{503} con el proveedor caído, y que el código no tuviera dependencias externas & Lectura línea por línea del código, ejecución de los tres casos en la terminal y comprobación de las respuestas y de los logs con \texttt{X-Correlation-Id} \\
 \bottomrule
 \end{tabularx}
 \end{table}
