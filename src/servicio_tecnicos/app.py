@@ -7,6 +7,7 @@ servicio responde por HTTP y que otro servicio puede consultarlo.
 Ejecutar:  python app.py
 Probar:    curl http://localhost:8081/api/tecnicos
            curl http://localhost:8081/actuator/health
+           curl http://localhost:8081/api/tecnicos
 """
 
 import json
@@ -21,6 +22,7 @@ TECNICOS = {
     1: {"id": 1, "nombre": "Luis Vera", "zona": "Quevedo centro", "disponible": True, "casos_abiertos": 2},
     2: {"id": 2, "nombre": "Marta Solis", "zona": "Buena Fe", "disponible": True, "casos_abiertos": 1},
     3: {"id": 3, "nombre": "Jorge Paredes", "zona": "Valencia", "disponible": False, "casos_abiertos": 4},
+    4: {"id": 4, "nombre": "Ana Cedeño", "zona": "Babahoyo", "disponible": True, "casos_abiertos": 0},
 }
 
 
@@ -45,6 +47,10 @@ class Manejador(BaseHTTPRequestHandler):
 
         if self.path == "/actuator/health":
             return self._responder(200, {"status": "UP", "servicio": "servicio-tecnicos"}, correlacion)
+            
+        if self.path.startswith("/api/tecnicos?disponible=true"):
+            disponibles = [t for t in TECNICOS.values() if t["disponible"]]
+            return self._responder(200, disponibles, correlacion)
 
         if self.path == "/api/tecnicos":
             return self._responder(200, list(TECNICOS.values()), correlacion)
